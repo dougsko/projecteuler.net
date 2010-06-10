@@ -1,6 +1,10 @@
-CFLAGS= -g `pkg-config --libs --cflags glib-2.0` -lm
+CFLAGS= -g `pkg-config --libs --cflags glib-2.0` -lm -I.
 
-all: solution
+all: solution tests
+
+solution: helpers_23.o 
+
+tests: helpers_23.o
 
 clean:
-	rm solution
+	rm solution tests *.o
