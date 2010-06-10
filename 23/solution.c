@@ -4,7 +4,7 @@ int
 main(void)
 {
     GArray *abundants, *results;
-    gint i, j, maybe, good;
+    gint i;
 
     abundants = g_array_new(FALSE, FALSE, sizeof(gint));
     results = g_array_new(FALSE, FALSE, sizeof(gint));

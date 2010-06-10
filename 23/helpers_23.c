@@ -35,7 +35,7 @@ sum_array(GArray *array)
 }
 
 gint
-abundant(gint num, GArray *facts)
+is_abundant(gint num, GArray *facts)
 {
     gint sum;
 
@@ -68,7 +68,7 @@ is_sum_of_abundants(gint num, GArray *abundants)
         if(maybe > 0){
             facts = g_array_new(FALSE, FALSE, sizeof(gint));
             facts = factors(maybe, facts);
-            if(abundant(maybe, facts)){
+            if(is_abundant(maybe, facts)){
                 g_array_free(facts, TRUE);
                 return 0;
             }
@@ -88,7 +88,7 @@ get_abundants(){
     for(i=1; i < 28124; i++){
         facts = g_array_new(FALSE, FALSE, sizeof(gint));
         facts = factors(i, facts);
-        if(abundant(i, facts)){
+        if(is_abundant(i, facts)){
             g_array_append_val(abundants, i);
         }
         g_array_free(facts, TRUE);

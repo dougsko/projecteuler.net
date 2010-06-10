@@ -40,7 +40,7 @@ test_sum_array(){
 }
 
 gint
-test_abundant(){
+test_is_abundant(){
     GArray *facts;
     gint i = 12;
     gint j = 14;
@@ -49,13 +49,13 @@ test_abundant(){
     facts = g_array_new(FALSE, FALSE, sizeof(gint));
     facts = factors(i, facts);
 
-    res1 = abundant(i, facts);
+    res1 = is_abundant(i, facts);
     g_array_free(facts, TRUE);
 
     facts = g_array_new(FALSE, FALSE, sizeof(gint));
     facts = factors(j, facts);
 
-    res2 = abundant(j, facts);
+    res2 = is_abundant(j, facts);
     g_array_free(facts, TRUE);
 
     if((res1  == 1) && (res2 == 0)){
@@ -84,8 +84,8 @@ main(){
         g_printf("sum_array failed\n");
     }
 
-    if(test_abundant()){
-        g_printf("abundant passed\n");
+    if(test_is_abundant()){
+        g_printf("is_abundant passed\n");
     }
     else{
         g_printf("abundant failed\n");

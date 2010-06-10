@@ -15,7 +15,7 @@ sum_array(GArray *array);
  * returns 1 if NUM is abundant and 0 if not.
  */
 gint 
-abundant(gint num, GArray *facts);
+is_abundant(gint num, GArray *facts);
 
 /* Prints the contents of ARRAY's cells */
 void 
