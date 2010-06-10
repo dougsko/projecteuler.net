@@ -1,7 +1,9 @@
 #include <glib.h>
 #include <math.h>
 
-GArray* factors(gint num, GArray *facts){
+GArray* 
+factors(gint num, GArray *facts)
+{
     gint i= 1;
     gint second_fact;
 
@@ -20,7 +22,9 @@ GArray* factors(gint num, GArray *facts){
     return facts;
 }
 
-gint sum_array(GArray *array){
+gint 
+sum_array(GArray *array)
+{
     gint sum = 0;
     gint i;
 
@@ -31,7 +35,9 @@ gint sum_array(GArray *array){
     return sum;
 }
 
-gint abundant(gint num, GArray *facts){
+gint 
+abundant(gint num, GArray *facts)
+{
     gint sum;
 
     sum = sum_array(facts);
@@ -42,16 +48,19 @@ gint abundant(gint num, GArray *facts){
     return 0;
 }
 
-gint print_array(GArray *array){
+void 
+print_array(GArray *array)
+{
     gint i;
     
     for(i=0; i < array->len; i++){
         g_printf("%i\n", g_array_index(array, gint, i));
     }
-    return 0;
 }
 
-gint is_sum_of_abundants(gint num, GArray *abundants){
+gint 
+is_sum_of_abundants(gint num, GArray *abundants)
+{
     gint i, maybe;
     GArray *facts;
 
@@ -70,7 +79,9 @@ gint is_sum_of_abundants(gint num, GArray *abundants){
     return 1;
 }
 
-int main(void){
+int 
+main(void)
+{
     GArray *facts, *abundants, *results;
     gint i, j, maybe, good;
 
