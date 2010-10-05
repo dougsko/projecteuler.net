@@ -30,11 +30,9 @@ def factors(num)
     2.upto Math.sqrt(num) do |i|
         if num % i == 0
             facts << i
-            if i != 1 && i != 0
-                second_fact = num / i
-                if second_fact != num
-                    facts << second_fact
-                end
+            second_fact = num / i
+            if second_fact != num
+                facts << second_fact
             end
         end
     end
@@ -55,16 +53,10 @@ abundants = []
     end
 end
 
-all = []
 sum = 0
 1.upto 28123 do |n|
-    abundants.each do |abundant|
-        test = n - abundant
-        if test > 1
-            if ! abundants.include?(test)
-                sum += n
-            end
-        end
-    end
+    abundants_short = abundants.reject{ |abund| abund > n }
+    to_test = abundants_short.collect{ |abund| n - abund }
+    sum += n if (abundants_short & to_test).size == 0
 end
 puts sum
