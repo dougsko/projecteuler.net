@@ -18,37 +18,33 @@
 #
 require '../tools/helpers.rb'
 
+def sum_a(array)
+    sum = 0
+    array.collect{|a| sum += a}
+    sum
+end
+
 p = Prime.new
 primes = []
 primes << p.next
 
-while primes.last < 1000 do
+while primes.last < 1000000 do
     primes << p.next
 end
 
-sum = 2
-i = 0
-j = 1
 window_size = 0
 longest_window = 0
 biggest_prime = 0
 
-# expand window as long as sum is prime.
-# as soon as it isnt, i +=1 and j = i+1
-# then keep adding 1 to j, take the sum, and check it for prime
-#while i <= primes.size do #and j <= primes.size do
-loop do
-    primes[i..j].collect{|prime| sum += prime}
-    while primes.include?(sum) do
-        window_size = primes[i..j].size
-        if window_size > longest_window
-            longest_window = window_size
-            biggest_prime = sum
-            puts "#{biggest_prime} - #{longest_window}"
+0.upto(primes.size - 1) do |i|
+    (i+1).upto primes.size do |j|
+        sum = sum_a(primes[i..j])
+        if primes.include?(sum)
+            if primes[i..j].size > longest_window
+                longest_window = primes[i..j].size
+                biggest_prime = sum 
+            end
         end
-        j += 1
     end
-    i += 1
 end
-#puts "#{biggest_prime}"
-#puts "Longest Window = #{longest_window}"
+puts "#{biggest_prime} is the sum of #{longest_window} primes"
