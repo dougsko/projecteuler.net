@@ -29,6 +29,7 @@ make_pentagonal_array(gint size)
     
     primes = g_array_new(FALSE, FALSE, sizeof(gint));
     for(i = 2; i <= size; i++){
+        pn = n(3n1)/2
         g_array_append_val(primes, i);
     }
     return primes;
