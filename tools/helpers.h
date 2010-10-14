@@ -1,6 +1,7 @@
 /* Helper functions for projecteuler.net problems. */
 
 #include <string.h>
+#include <glib.h>
 
 int is_prime(long value){
     long j, r, rold, rnew;
@@ -28,4 +29,24 @@ double fact(int n){
     return accu;
 }
 
+gint
+print_array(GArray *array)
+{
+    int i;
+    for(i=0; i < array->len; i++){
+        printf("%d\n", g_array_index(array, gint, i));
+    }
+    return 0;
+}
 
+gint
+sum_array(GArray *array)
+{
+    gint i;
+    gint sum = 0;
+
+    for(i=0; i < array->len; i++){
+        sum = sum + g_array_index(array, gint, i);
+    }
+    return sum;
+}
