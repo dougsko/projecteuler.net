@@ -20,9 +20,9 @@ int is_prime(long value){
             return 1;
 }
 
-double fact(int n){
-    double accu = 1;
-    int i;
+gdouble fact(gint n){
+    gdouble accu = 1;
+    gint i;
     for(i = 1; i <= n; i++){
         accu *= i;
     }
@@ -33,9 +33,12 @@ gint
 print_array(GArray *array)
 {
     int i;
-    for(i=0; i < array->len; i++){
-        printf("%d\n", g_array_index(array, gint, i));
+    printf("[");
+    for(i=0; i < array->len - 1; i++){
+        printf("%d, ", g_array_index(array, gint, i));
     }
+    printf("%d]\n", g_array_index(array, gint, array->len));
+    printf("]\n");
     return 0;
 }
 
