@@ -23,5 +23,5 @@ c = 28433 * b
 d = c + 1
 d_a = d.to_s('F').split('.')[0].split('')
 
-puts d_a[(c_a.size - 10)..c_a.size].inspect
+puts d_a[(d_a.size - 10)..d_a.size].inspect
 
