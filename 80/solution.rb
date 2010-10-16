@@ -19,13 +19,20 @@
 require 'bigdecimal'
 
 sum = 0
+
 1.upto 100 do |i|
-    i = 2
-    array = BigDecimal.new(i.to_s).sqrt(100).to_s('F').split('.')[1].split('')
+    whole = 0
+    dec = 0
+    
+    i = 25
+    whole, dec = BigDecimal.new(i.to_s).sqrt(100).to_s('F').split('.')
+    array = (whole + dec).split('')
+    
     if array != ['0']
         array[0..99].collect{ |j| sum += j.to_i}
     end
-    puts sum
+    puts whole
+    puts dec
     exit
 end
 puts sum
