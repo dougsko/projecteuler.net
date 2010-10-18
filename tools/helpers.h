@@ -1,5 +1,6 @@
 /* Helper functions for projecteuler.net problems. */
 
+#include <stdio.h>
 #include <string.h>
 #include <glib.h>
 
