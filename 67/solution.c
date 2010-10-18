@@ -12,7 +12,7 @@ read_data(gchar *filename)
     GArray *row_array;
     gchar *contents, *row;
     gchar **rows, **elements;
-    GError *error;
+    GError *error = NULL;
     gint i, j, k, num;
     GPtrArray *tri_data;
 
@@ -20,7 +20,7 @@ read_data(gchar *filename)
     row_array = g_array_new(FALSE, FALSE, sizeof (gint));
 
     if(! g_file_get_contents(filename, &contents, NULL, &error))
-        printf("%s\n", error);
+        printf("%s\n", error->message);
 
     rows = g_strsplit(contents, "\n", -1);
     for(i=0; i < g_strv_length(rows); i++)
