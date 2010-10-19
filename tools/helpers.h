@@ -54,3 +54,19 @@ sum_array(GArray *array)
     }
     return sum;
 }
+
+gchar *
+read_file(gchar *filename)
+{
+    gchar *contents;
+    GError *error = NULL;
+
+    if(! g_file_get_contents(filename, &contents, NULL, &error))
+    {
+        fprintf(stderr, "%s\n", error->message);
+        g_error_free(error);
+    }
+    return contents;
+}
+
+

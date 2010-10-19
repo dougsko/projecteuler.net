@@ -1,11 +1,8 @@
-#include <helpers.h>
+#include "../tools/helpers.h"
 
-void
-foo(gchar *bar)
-{
-    g_print("%s\n", bar);
-}
-
+/* return an array of arrays, each sub array
+ * is a row of data
+ */
 GPtrArray *
 read_data(gchar *filename)
 {
@@ -13,15 +10,16 @@ read_data(gchar *filename)
     gchar *contents, *row;
     gchar **rows, **elements;
     GError *error = NULL;
-    gint i, j, k, num;
+    gint i, j, k;
     GPtrArray *tri_data;
 
     tri_data = g_ptr_array_new();
     row_array = g_array_new(FALSE, FALSE, sizeof (gint));
 
-    if(! g_file_get_contents(filename, &contents, NULL, &error))
-        printf("%s\n", error->message);
+    /* read file */
+    contents = read_file(filename);
 
+    /* split data into a GPointerArray of GArrays */
     rows = g_strsplit(contents, "\n", -1);
     for(i=0; i < g_strv_length(rows); i++)
     {
@@ -31,17 +29,13 @@ read_data(gchar *filename)
         {
             k = atoi(elements[j]);
             g_array_append_val(row_array, k);
-            //g_ptr_array_add(tri_data,rows[i]);
         }
         g_ptr_array_add(tri_data,row_array);
     }
     
-    /*
-    g_free(elements);
-    g_free(rows);
-    g_free(contents);
-    g_free(row_array);
-    */
+    g_error_free(error);
+    g_array_free(row_array, TRUE);
+    
     return tri_data;
 }
 
@@ -51,16 +45,15 @@ main(int argc, char **argv)
     GArray *rows, *row;
     GPtrArray *triangle;
     gint count, i, j, k, m, index, sum;
-    gint biggest_sum = 6594;
+    gint biggest_sum = 0; //6594;
 
     triangle = read_data("triangle.txt");
     row = g_array_new (FALSE, FALSE, sizeof (gint));
     
     for(m=0; m <= 1000000; m++)
     {
-    for(k=0; k <= 1000000; k++)
+    for(k=0; k <= 10000000; k++)
     {
-        //srand(time(NULL));
         index = 0;
         row = g_ptr_array_index(triangle, 0);
         sum = g_array_index(row, gint, 0);
