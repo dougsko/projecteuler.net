@@ -1,8 +1,14 @@
-/*
- * Includes
+/* projecteuler.net
+ *
+ * problem 67
+ *
+ * answer: 7273
+ *
  */
 #include "gaul.h"
 #include "../tools/helpers.h"
+
+#define GA_STRUGGLE_NUM_POPS    5
 
 /* return an array of arrays, each sub array
  * is a row of data
@@ -44,12 +50,10 @@ read_data(gchar *filename)
 boolean
 solution_gen_hook(gint generation, population *pop)
 {
-    /*
-    gint best_yet = 6915;
+    gint best_yet = 7000;
 
     if(ga_get_entity_from_rank(pop,0)->fitness > best_yet)
         return FALSE;
-    */
 
     if(generation % 20 == 0)
     {
@@ -108,8 +112,10 @@ solution_score(population *pop, entity *entity)
 gint 
 main(int argc, char **argv)
 {
-    population *pop = NULL;	/* Population of solutions. */
-    int seed;	/* Random number seed. */
+    population *pop[GA_STRUGGLE_NUM_POPS];	/* Population of solutions. */
+    gint i;
+    gint seed;	/* Random number seed. */
+    gint highest = 0;
 
     srandom(time(NULL));
     seed = random();
@@ -122,46 +128,53 @@ main(int argc, char **argv)
 
     random_seed(seed);
 
-    pop = ga_genesis_bitstring(
-        2000,			/* const int              population_size */
-        1,				/* const int              num_chromo */
-        101,			/* const int              len_chromo */
-        solution_gen_hook,			/* GAgeneration_hook      generation_hook */
-        NULL,			/* GAiteration_hook       iteration_hook */
-        NULL,			/* GAdata_destructor      data_destructor */
-        NULL,			/* GAdata_ref_incrementor data_ref_incrementor */
-        solution_score,		/* GAevaluate             evaluate */
-        ga_seed_bitstring_random,	/* GAseed                 seed */
-        NULL,			/* GAadapt                adapt */
-        ga_select_one_bestof2,	/* GAselect_one           select_one */
-        ga_select_two_bestof2,	/* GAselect_two           select_two */
-        ga_mutate_bitstring_multipoint,	/* GAmutate               mutate */
-        ga_crossover_bitstring_doublepoints,	/* GAcrossover            crossover */
-        NULL,			/* GAreplace              replace */
-        read_data("triangle.txt")			/* vpointer	User data */
-    );
+    for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
+    {
+        pop[i] = ga_genesis_bitstring(
+            1000,			/* const int              population_size */
+            1,				/* const int              num_chromo */
+            101,			/* const int              len_chromo */
+            NULL,			/* GAgeneration_hook      generation_hook */
+            NULL,			/* GAiteration_hook       iteration_hook */
+            NULL,			/* GAdata_destructor      data_destructor */
+            NULL,			/* GAdata_ref_incrementor data_ref_incrementor */
+            solution_score,		/* GAevaluate             evaluate */
+            ga_seed_bitstring_random,	/* GAseed                 seed */
+            NULL,			/* GAadapt                adapt */
+            ga_select_one_bestof2,	/* GAselect_one           select_one */
+            ga_select_two_bestof2,	/* GAselect_two           select_two */
+            ga_mutate_bitstring_multipoint,	/* GAmutate               mutate */
+            ga_crossover_bitstring_doublepoints,	/* GAcrossover            crossover */
+            NULL,			/* GAreplace              replace */
+            read_data("triangle.txt")			/* vpointer	User data */
+        );
 
-    ga_population_set_parameters(
-        pop,			/* population      *pop */
-        GA_SCHEME_DARWIN,	/* const ga_scheme_type     scheme */
-        GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
-        0.9,			/* double  crossover */
-        0.25,			/* double  mutation */
-        0.001              	/* double  migration */
-     );
+        ga_population_set_parameters(
+            pop[i],			/* population      *pop */
+            GA_SCHEME_DARWIN,	/* const ga_scheme_type     scheme */
+            GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
+            0.9,			/* double  crossover */
+            0.25,			/* double  mutation */
+            0.001              	/* double  migration */
+        );
+    }
 
-    ga_evolution(
+    ga_evolution_archipelago(
+        GA_STRUGGLE_NUM_POPS,    
         pop,		/* population              *pop */
         100		/* const int               max_generations */
     );
 
-    if((gint) ga_get_entity_from_rank(pop,0)->fitness > 7251)
+    for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
     {
-        printf("The final solution with seed = %d had score %d\n\n",
-            seed, (gint) ga_get_entity_from_rank(pop,0)->fitness);
-    }
+        if((gint) ga_get_entity_from_rank(pop[i],0)->fitness > highest)
+        {
+            highest = (gint) ga_get_entity_from_rank(pop[i],0)->fitness;
+        }
   
-  ga_extinction(pop);
+        ga_extinction(pop[i]);
+    }
+    printf("The final solution with seed = %d had score %d\n\n", seed, highest);
 
   exit(EXIT_SUCCESS);
 }
