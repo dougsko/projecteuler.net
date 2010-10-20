@@ -82,7 +82,7 @@ solution_score(population *pop, entity *entity)
     for(i=1; i < triangle->len - 1; i++)
     {
         row = g_ptr_array_index(triangle, i);
-        if(ga_bit_get((byte *)entity->chromosome[0], i) == 0)
+        if(ga_bit_get(entity->chromosome[0], i) == 0)
         {
             sum += g_array_index(row, gint, index);
         }
