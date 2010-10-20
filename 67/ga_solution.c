@@ -49,13 +49,13 @@ solution_gen_hook(gint generation, population *pop)
 
     if(ga_get_entity_from_rank(pop,0)->fitness > best_yet)
         return FALSE;
+    */
 
     if(generation % 20 == 0)
     {
         printf("Generation = %d\n", generation);
         printf("Best fitness = %0.f\n", ga_get_entity_from_rank(pop,0)->fitness);
     }
-    */
 
     /*
     if(ga_get_entity_from_rank(pop,0)->fitness == ga_get_entity_from_rank(pop,2)->fitness)
@@ -114,17 +114,19 @@ main(int argc, char **argv)
     srandom(time(NULL));
     seed = random();
 
+    /*
     printf("ProjectEuler.net Problem 67 - GA Solution\n");
     printf("Random number seed is %d\n", seed);
     printf("\n");
+    */
 
     random_seed(seed);
 
     pop = ga_genesis_bitstring(
-        1000,			/* const int              population_size */
+        10000,			/* const int              population_size */
         1,				/* const int              num_chromo */
         100,			/* const int              len_chromo */
-        NULL,			/* GAgeneration_hook      generation_hook */
+        solution_gen_hook,			/* GAgeneration_hook      generation_hook */
         NULL,			/* GAiteration_hook       iteration_hook */
         NULL,			/* GAdata_destructor      data_destructor */
         NULL,			/* GAdata_ref_incrementor data_ref_incrementor */
@@ -150,11 +152,14 @@ main(int argc, char **argv)
 
     ga_evolution(
         pop,		/* population              *pop */
-        1000		/* const int               max_generations */
+        100		/* const int               max_generations */
     );
 
-    printf("The final solution with seed = %d had score %d\n",
-        seed, (gint) ga_get_entity_from_rank(pop,0)->fitness);
+    if((gint) ga_get_entity_from_rank(pop,0)->fitness > 7248)
+    {
+        printf("The final solution with seed = %d had score %d\n\n",
+            seed, (gint) ga_get_entity_from_rank(pop,0)->fitness);
+    }
   
   ga_extinction(pop);
 
