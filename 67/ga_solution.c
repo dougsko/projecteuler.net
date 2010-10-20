@@ -53,8 +53,8 @@ solution_gen_hook(gint generation, population *pop)
 
     if(generation % 20 == 0)
     {
-        printf("Generation = %d\n", generation);
-        printf("Best fitness = %0.f\n", ga_get_entity_from_rank(pop,0)->fitness);
+        //printf("Generation = %d\n", generation);
+        printf("%0.f\n", ga_get_entity_from_rank(pop,0)->fitness);
     }
 
     /*
@@ -123,9 +123,9 @@ main(int argc, char **argv)
     random_seed(seed);
 
     pop = ga_genesis_bitstring(
-        10000,			/* const int              population_size */
+        2000,			/* const int              population_size */
         1,				/* const int              num_chromo */
-        100,			/* const int              len_chromo */
+        101,			/* const int              len_chromo */
         solution_gen_hook,			/* GAgeneration_hook      generation_hook */
         NULL,			/* GAiteration_hook       iteration_hook */
         NULL,			/* GAdata_destructor      data_destructor */
@@ -135,7 +135,7 @@ main(int argc, char **argv)
         NULL,			/* GAadapt                adapt */
         ga_select_one_bestof2,	/* GAselect_one           select_one */
         ga_select_two_bestof2,	/* GAselect_two           select_two */
-        ga_mutate_bitstring_singlepoint,	/* GAmutate               mutate */
+        ga_mutate_bitstring_multipoint,	/* GAmutate               mutate */
         ga_crossover_bitstring_doublepoints,	/* GAcrossover            crossover */
         NULL,			/* GAreplace              replace */
         read_data("triangle.txt")			/* vpointer	User data */
@@ -146,8 +146,8 @@ main(int argc, char **argv)
         GA_SCHEME_DARWIN,	/* const ga_scheme_type     scheme */
         GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
         0.9,			/* double  crossover */
-        0.1,			/* double  mutation */
-        0.0              	/* double  migration */
+        0.25,			/* double  mutation */
+        0.001              	/* double  migration */
      );
 
     ga_evolution(
@@ -155,7 +155,7 @@ main(int argc, char **argv)
         100		/* const int               max_generations */
     );
 
-    if((gint) ga_get_entity_from_rank(pop,0)->fitness > 7248)
+    if((gint) ga_get_entity_from_rank(pop,0)->fitness > 7251)
     {
         printf("The final solution with seed = %d had score %d\n\n",
             seed, (gint) ga_get_entity_from_rank(pop,0)->fitness);
