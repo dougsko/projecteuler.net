@@ -75,7 +75,6 @@ print_array(GArray *array)
         printf("%d, ", g_array_index(array, gint, i));
     }
     printf("%d]\n", g_array_index(array, gint, array->len));
-    printf("]\n");
     return 0;
 }
 
