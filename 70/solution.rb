@@ -22,15 +22,18 @@
 require '../tools/pemethods'
 include PEMethods
 
-lowest = 100;
+lowest = 2
+max = 10 ** 7
 
-2.upto(10 ** 7) do |n|
+2.upto(max) do |n|
     p = phi(n)
     if p.to_s.split('') == n.to_s.split('').sort
         ratio = n.to_f / p
         if ratio < lowest
             lowest = ratio
-            puts n
         end
+        print "\nphi(#{n}) = #{p}\n"
+        print "#{n}/phi(#{n}) = #{ratio}\n"
     end
+    puts n if n % 1000 == 0
 end
