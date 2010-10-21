@@ -27,7 +27,6 @@ sum = 0
             triangle[row][col] += triangle[row + 1][col + 1]
         end
     end
-    puts
 end
 
 puts triangle[0][0]
