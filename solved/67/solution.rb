@@ -18,35 +18,16 @@ require 'yaml'
 
 triangle = YAML.load_file('triangle.yml')
 sum = 0
-biggest_sum = 6458
-index = 0
 
-1000.times do
-10000000.times do
-    sum = triangle[0][0]
-    index = 0
-    1.upto triangle.size-1 do |i|
-        if rand(2) == 0 
-            if rand(2) == 0
-                sum += triangle[i][index]
-            else
-                index += 1
-                sum += triangle[i][index]
-            end
+(triangle.size - 2).downto(0) do |row|
+    0.upto(row) do |col|
+        if triangle[row + 1][col] > triangle[row + 1][col + 1]
+            triangle[row][col] += triangle[row + 1][col]
         else
-            if rand(2) == 0
-                if triangle[i][index] <=> triangle[i][index+1]
-                    sum += triangle[i][index]
-                else
-                    index += 1
-                    sum += triangle[i][index+1]
-                end
-            end
-        end
-        if sum > biggest_sum
-            biggest_sum = sum
-            puts biggest_sum
+            triangle[row][col] += triangle[row + 1][col + 1]
         end
     end
+    puts
 end
-end
+
+puts triangle[0][0]
