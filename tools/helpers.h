@@ -3,6 +3,42 @@
 #include <stdio.h>
 #include <string.h>
 #include <glib.h>
+#include <math.h>
+
+gint
+gcd(gint a, gint b)
+{
+    while(a != b) 
+    {
+        if(a > b){ a = a - b;} 
+        else{ b = b - a; }
+    }
+    return a;
+}
+
+gfloat
+phi(gint n)
+{
+    gfloat result = n; 
+    gint i;
+    
+    for(i=2; i * i <= n; i++) 
+    {
+        if (n % i == 0) 
+        {
+            result -= result / i;
+        } 
+        while (n % i == 0)
+        {
+            n /= i;
+        } 
+    }
+    if (n > 1)
+    { 
+        result -= result / n;
+    }
+    return result; 
+}
 
 int is_prime(long value){
     long j, r, rold, rnew;

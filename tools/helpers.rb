@@ -55,3 +55,33 @@ class Prime
     end
   end
 end
+
+def gcd(a, b)
+    while a != b
+        if a > b
+            a = a-b
+        else
+            b = b-a
+        end
+    end
+    a
+end
+
+def phi(n)
+    result = n
+
+    2.upto(n) do |i|
+        break if i * i > n
+
+        if (n % i == 0)
+            result -= result / i
+        end
+        while (n % i == 0)
+            n /= i
+        end
+    end
+    if (n > 1)
+        result -= result / n
+    end
+    result
+end
