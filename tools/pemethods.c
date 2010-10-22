@@ -13,6 +13,8 @@ void Init_pemethods();
 // here
 VALUE method_phi(VALUE self, VALUE n);
 VALUE method_is_prime(VALUE self, VALUE value);
+VALUE method_gcd(VALUE self, VALUE x, VALUE y);
+VALUE method_fact(VALUE self, VALUE x);
 
 // The initialization method for this module
 void 
@@ -21,6 +23,8 @@ Init_pemethods()
 	PEMethods = rb_define_module("PEMethods");
 	rb_define_method(PEMethods, "phi", method_phi, 1);
     rb_define_method(PEMethods, "is_prime", method_is_prime, 1);
+    rb_define_method(PEMethods, "gcd", method_gcd, 2);
+    rb_define_method(PEMethods, "fact", method_fact, 1);
 }
 
 // Our 'test1' method.. it simply returns a value of '10' for now.
@@ -67,4 +71,34 @@ method_is_prime(VALUE self, VALUE value)
             return Qfalse;
     }
     return Qtrue;
+}
+
+VALUE
+method_gcd(VALUE self, VALUE x, VALUE y)
+{
+    gint a, b;
+
+    a = NUM2INT(x);
+    b = NUM2INT(y);
+
+    while(a != b)
+    {
+        if(a > b){ a = a - b;}
+        else{ b = b - a; }
+    }
+    return INT2NUM(a);
+}
+
+VALUE
+method_fact(VALUE self, VALUE x)
+{
+        gdouble accu = 1;
+        gint n = NUM2INT(x);
+        gint i;
+
+        for(i = 1; i <= n; i++)
+        {
+            accu *= i;
+        }
+        return rb_float_new(accu);
 }
