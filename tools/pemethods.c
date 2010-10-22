@@ -64,7 +64,7 @@ method_is_prime(VALUE self, VALUE value)
     } while( rold != rnew );
     for (j = 2; ( j <= rnew ); ++j){
         if ( value % j == 0 )
-            return INT2NUM(0);
+            return Qfalse;
     }
-    return INT2NUM(1);
+    return Qtrue;
 }
