@@ -1,12 +1,7 @@
 # Loads mkmf which is used to make makefiles for Ruby extensions
-require 'mkmf'
+require 'rubygems'
+require 'mkrf'
 
-# Give it a name
-extension_name = 'pemethods'
-
-# The destination
-dir_config(ENV['PWD'])
-
-# Do the work
-#create_makefile(extension_name)
-create_makefile('pemethods')
+Mkrf::Generator.new('pemethods', 'pemethods.c') do |g|
+    g.cflags << "`pkg-config --cflags --libs glib-2.0`" 
+end

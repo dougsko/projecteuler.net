@@ -20,6 +20,7 @@
 #
 
 require '../tools/pemethods'
+
 include PEMethods
 
 lowest = 2
@@ -35,5 +36,5 @@ max = 10 ** 7
         print "\nphi(#{n}) = #{p}\n"
         print "#{n}/phi(#{n}) = #{ratio}\n"
     end
-    puts n if n % 1000 == 0
+    puts n if n % 100000 == 0
 end
