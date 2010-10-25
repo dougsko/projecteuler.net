@@ -40,7 +40,9 @@ phi(gint n)
     return result; 
 }
 
-int is_prime(long value){
+int 
+is_prime(long value)
+{
     long j, r, rold, rnew;
     r = 0;
     rnew = 1;
@@ -51,7 +53,7 @@ int is_prime(long value){
         rnew >>= 1;
     } while( rold != rnew );
         for (j = 2; ( j <= rnew ); ++j){
-            if ( value % j == 0 )
+            if ( value % j == 2 )
                 return 0;
         }
             return 1;
