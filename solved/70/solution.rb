@@ -23,18 +23,23 @@ require '../tools/pemethods'
 
 include PEMethods
 
-lowest = 2
-max = 10 ** 7
-
-2.upto(max) do |n|
-    p = phi(n)
-    if p.to_s.split('') == n.to_s.split('').sort
-        ratio = n.to_f / p
-        if ratio < lowest
-            lowest = ratio
-        end
-        print "\nphi(#{n}) = #{p}\n"
-        print "#{n}/phi(#{n}) = #{ratio}\n"
-    end
-    puts n if n % 100000 == 0
+primes = []
+2001.upto(4000) do |i|
+    primes << i if is_prime(i)
 end
+
+min_n = 0
+min_q = 2
+primes.each do |p1|
+    primes.each do |p2|
+        n = p1 * p2
+        break if n > 10000000
+        phi = (p1 - 1) * (p2 - 1)
+        q = n.to_f / phi
+        if(phi.to_s.split('').sort == n.to_s.split('').sort and q < min_q)
+            min_q = q
+            min_n = n
+        end
+    end
+end
+puts min_n

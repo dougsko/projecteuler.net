@@ -55,15 +55,18 @@ method_phi(VALUE self, VALUE n)
 }
 
 VALUE
-method_is_prime(VALUE self, VALUE value)
+method_is_prime(VALUE self, VALUE r_value)
 {
     gint j, r, rold, rnew;
+    glong value;
+
+    value = NUM2LONG(r_value);
     r = 0;
     rnew = 1;
     do {
         rold = r;
         r = rnew;
-        rnew = ( r + ( NUM2LONG(value) / r ) );
+        rnew = ( r + ( value / r ) );
         rnew >>= 1;
     } while( rold != rnew );
     for (j = 2; ( j <= rnew ); ++j){
