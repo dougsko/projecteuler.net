@@ -1,6 +1,8 @@
 /* projecteuler.net
  *
- * problem 81
+ * problem 67
+ *
+ * answer: 7273
  *
  */
 #include "gaul.h"
@@ -31,7 +33,7 @@ read_data(gchar *filename)
     for(i=0; i < g_strv_length(rows); i++)
     {
         row_array = g_array_new(FALSE, FALSE, sizeof (gint));
-        elements = g_strsplit(rows[i], " ", -1);
+        elements = g_strsplit(rows[i], ",", -1);
         for(j=0; j < g_strv_length(elements); j++)
         {
             k = atoi(elements[j]);
@@ -41,6 +43,9 @@ read_data(gchar *filename)
     }
     
     g_array_free(row_array, TRUE);
+
+    //row_array = g_ptr_array_index(tri_data, tri_data->len-2);
+    //g_print("%d\n", g_array_index(row_array, gint, row_array->len-1));
     
     return tri_data;
 }
@@ -48,7 +53,7 @@ read_data(gchar *filename)
 boolean
 solution_gen_hook(gint generation, population *pop)
 {
-    gint best_yet = 7000;
+    gint best_yet = 0;
 
     if(ga_get_entity_from_rank(pop,0)->fitness > best_yet)
         return FALSE;
@@ -74,35 +79,61 @@ solution_score(population *pop, entity *entity)
 {
     GArray *row;
     GPtrArray *triangle;
-    gint i, index, sum;
+    gint i, index, sum, row_num;
 
-    //triangle = read_data("triangle.txt");
     triangle = pop->data;
     row = g_array_new (FALSE, FALSE, sizeof (gint));
     
     index = 0;
+    row_num = 0;
     row = g_ptr_array_index(triangle, 0);
     sum = g_array_index(row, gint, 0);
 
-    for(i=1; i < triangle->len - 1; i++)
-    {
-        row = g_ptr_array_index(triangle, i);
+    i = 0;
+    while( i > -1){
+    //for(i=0; i < 6; i++)//triangle->len - 2; i++)
+    //{
+        // go down
         if(ga_bit_get(entity->chromosome[0], i) == 0)
         {
+            // check if we can can go down
+            if(row_num+1 < triangle->len) // yes
+                row_num++;
+            else // no
+            {
+                // check if we can go right
+                if(index + 1 < triangle->len) // yes
+                    index++;
+                else // no
+                    break;
+            }
+            row = g_ptr_array_index(triangle, row_num);
+            g_print("%d\n", g_array_index(row, gint, index));
             sum += g_array_index(row, gint, index);
         }
+        // go right
         else
         {
-            index++;
+            // check if we can go right
+            if( index < row->len) // yes
+                index++;
+            else // no
+            {
+                // check if we can go down
+                if(row_num+1 < triangle->len) // yes
+                    row_num++;
+                else // no
+                    break;
+            }
+            row = g_ptr_array_index(triangle, row_num);
+            g_print("%d\n", g_array_index(row, gint, index));
             sum += g_array_index(row, gint, index);
         }
+    //}
+    i++;
     }
-
-    entity->fitness = sum;
+    entity->fitness = 1.0 / sum;
     
-    //g_ptr_array_free(triangle, TRUE);
-    //g_array_free(row, TRUE);
-
     return TRUE;
 }
 
@@ -113,7 +144,7 @@ main(int argc, char **argv)
     population *pop[GA_STRUGGLE_NUM_POPS];	/* Population of solutions. */
     gint i;
     gint seed;	/* Random number seed. */
-    gint highest = 0;
+    gfloat highest = 0;
 
     srandom(time(NULL));
     seed = random();
@@ -129,7 +160,7 @@ main(int argc, char **argv)
     for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
     {
         pop[i] = ga_genesis_bitstring(
-            1000,			/* const int              population_size */
+            50,			/* const int              population_size */
             1,				/* const int              num_chromo */
             101,			/* const int              len_chromo */
             NULL,			/* GAgeneration_hook      generation_hook */
@@ -144,7 +175,7 @@ main(int argc, char **argv)
             ga_mutate_bitstring_multipoint,	/* GAmutate               mutate */
             ga_crossover_bitstring_doublepoints,	/* GAcrossover            crossover */
             NULL,			/* GAreplace              replace */
-            read_data("triangle.txt")			/* vpointer	User data */
+            read_data("matrix_small.txt")			/* vpointer	User data */
         );
 
         ga_population_set_parameters(
@@ -165,14 +196,14 @@ main(int argc, char **argv)
 
     for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
     {
-        if((gint) ga_get_entity_from_rank(pop[i],0)->fitness > highest)
+        if((gfloat) ga_get_entity_from_rank(pop[i],0)->fitness > highest)
         {
-            highest = (gint) ga_get_entity_from_rank(pop[i],0)->fitness;
+            highest = (gfloat) ga_get_entity_from_rank(pop[i],0)->fitness;
         }
   
         ga_extinction(pop[i]);
     }
-    printf("The final solution with seed = %d had score %d\n\n", seed, highest);
+    printf("The final solution with seed = %d\nscore= %f\nfitness= %f\n\n", seed, 100/(highest*100), highest);
 
   exit(EXIT_SUCCESS);
 }
