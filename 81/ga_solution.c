@@ -1,14 +1,16 @@
 /* projecteuler.net
  *
- * problem 67
+ * problem 81
  *
- * answer: 7273
+ * answer: 
+ *
+ * 532246
  *
  */
 #include "gaul.h"
 #include "../tools/helpers.h"
 
-#define GA_STRUGGLE_NUM_POPS    5
+#define GA_STRUGGLE_NUM_POPS    20
 
 /* return an array of arrays, each sub array
  * is a row of data
@@ -90,47 +92,32 @@ solution_score(population *pop, entity *entity)
     sum = g_array_index(row, gint, 0);
 
     i = 0;
-    while( i > -1){
-    //for(i=0; i < 6; i++)//triangle->len - 2; i++)
-    //{
+    //g_print("%d\n", row->len);
+    //return 0;
+    while( TRUE )
+    {
         // go down
         if(ga_bit_get(entity->chromosome[0], i) == 0)
         {
-            // check if we can can go down
-            if(row_num+1 < triangle->len) // yes
-                row_num++;
-            else // no
-            {
-                // check if we can go right
-                if(index + 1 < triangle->len) // yes
-                    index++;
-                else // no
-                    break;
-            }
-            row = g_ptr_array_index(triangle, row_num);
-            g_print("%d\n", g_array_index(row, gint, index));
-            sum += g_array_index(row, gint, index);
-        }
-        // go right
-        else
-        {
-            // check if we can go right
-            if( index < row->len) // yes
+            if(row_num != triangle->len-2)
+                row_num++;    
+            else if(index != row->len-1)
                 index++;
-            else // no
-            {
-                // check if we can go down
-                if(row_num+1 < triangle->len) // yes
-                    row_num++;
-                else // no
-                    break;
-            }
-            row = g_ptr_array_index(triangle, row_num);
-            g_print("%d\n", g_array_index(row, gint, index));
-            sum += g_array_index(row, gint, index);
         }
-    //}
-    i++;
+        else // go right
+        {
+            if(index != row->len-1)
+                index++;
+            else if(row_num != triangle->len-2)
+                row_num++;
+        }
+        //g_print("row_num= %d, index= %d\t", row_num, index);
+        row = g_ptr_array_index(triangle, row_num);
+        //g_print("%d\n", g_array_index(row, gint, index));
+        sum += g_array_index(row, gint, index);
+        if(row_num == 79 && index == 79)
+            break;
+        i++;
     }
     entity->fitness = 1.0 / sum;
     
@@ -149,18 +136,12 @@ main(int argc, char **argv)
     srandom(time(NULL));
     seed = random();
 
-    /*
-    printf("ProjectEuler.net Problem 67 - GA Solution\n");
-    printf("Random number seed is %d\n", seed);
-    printf("\n");
-    */
-
     random_seed(seed);
 
     for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
     {
         pop[i] = ga_genesis_bitstring(
-            50,			/* const int              population_size */
+            1000,			/* const int              population_size */
             1,				/* const int              num_chromo */
             101,			/* const int              len_chromo */
             NULL,			/* GAgeneration_hook      generation_hook */
@@ -175,7 +156,7 @@ main(int argc, char **argv)
             ga_mutate_bitstring_multipoint,	/* GAmutate               mutate */
             ga_crossover_bitstring_doublepoints,	/* GAcrossover            crossover */
             NULL,			/* GAreplace              replace */
-            read_data("matrix_small.txt")			/* vpointer	User data */
+            read_data("matrix.txt")			/* vpointer	User data */
         );
 
         ga_population_set_parameters(
@@ -184,7 +165,7 @@ main(int argc, char **argv)
             GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
             0.9,			/* double  crossover */
             0.25,			/* double  mutation */
-            0.001              	/* double  migration */
+            0.01              	/* double  migration */
         );
     }
 
@@ -203,7 +184,8 @@ main(int argc, char **argv)
   
         ga_extinction(pop[i]);
     }
-    printf("The final solution with seed = %d\nscore= %f\nfitness= %f\n\n", seed, 100/(highest*100), highest);
+    //g_print("The final solution with seed = %d\nscore= %0.f\nfitness= %f\n\n", seed, 100/(highest*100), highest);
+    g_print("%0.f\n", 100/(highest*100));
 
   exit(EXIT_SUCCESS);
 }
