@@ -4,7 +4,7 @@ SHELL = /bin/sh
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /usr/local/lib/ruby/1.8/amd64-freebsd7
+topdir = /usr/local/lib/ruby/1.8/i386-openbsd4.7
 hdrdir = $(topdir)
 VPATH = $(srcdir):$(topdir):$(hdrdir)
 prefix = $(DESTDIR)/usr/local
@@ -21,16 +21,16 @@ localedir = $(datarootdir)/locale
 htmldir = $(docdir)
 datadir = $(datarootdir)
 includedir = $(prefix)/include
-infodir = $(DESTDIR)/usr/local/info/
-sysconfdir = $(prefix)/etc
+infodir = $(DESTDIR)/usr/local/info
+sysconfdir = $(DESTDIR)/etc
 mandir = $(DESTDIR)/usr/local/man
 libdir = $(exec_prefix)/lib
 sharedstatedir = $(prefix)/com
 oldincludedir = $(DESTDIR)/usr/include
 pdfdir = $(docdir)
 sitearchdir = $(sitelibdir)/$(sitearch)
-bindir = $(exec_prefix)/bin
 localstatedir = $(prefix)/var
+bindir = $(exec_prefix)/bin
 sitelibdir = $(sitedir)/$(ruby_version)
 libexecdir = $(exec_prefix)/libexec
 
@@ -41,35 +41,36 @@ LIBRUBYARG_SHARED = -Wl,-R -Wl,$(libdir) -L$(libdir) -l$(RUBY_SO_NAME)
 LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
 
 RUBY_EXTCONF_H = 
-CFLAGS   =  -fPIC -O2 -fno-strict-aliasing -pipe    -fPIC 
-INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/amd64-freebsd7 -I.
-CPPFLAGS = -DHAVE_MATH_H `pkg-config --cflags glib-2.0`
+CFLAGS   =  -fPIC -O2 -pipe  -fPIC 
+INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/i386-openbsd4.7 -I.
+DEFS     = 
+CPPFLAGS = -DHAVE_MATH_H -I/usr/local/include -DOPENSSL_NO_STATIC_ENGINE `pkg-config --cflags glib-2.0`
 CXXFLAGS = $(CFLAGS) 
-DLDFLAGS = -L.  -rdynamic  -Wl,-soname,$(.TARGET) 
-LDSHARED = cc -shared
+DLDFLAGS = -L.  -Wl,-E  
+LDSHARED = $(CC) -shared  -fPIC
 AR = ar
 EXEEXT = 
 
-RUBY_INSTALL_NAME = ruby18
-RUBY_SO_NAME = ruby18
-arch = amd64-freebsd7
-sitearch = amd64-freebsd7
+RUBY_INSTALL_NAME = ruby
+RUBY_SO_NAME = ruby
+arch = i386-openbsd4.7
+sitearch = i386-openbsd4.7
 ruby_version = 1.8
-ruby = /usr/local/bin/ruby18
+ruby = /usr/local/bin/ruby
 RUBY = $(ruby)
 RM = rm -f
 MAKEDIRS = mkdir -p
-INSTALL = /usr/bin/install -c -o root -g wheel
+INSTALL = /usr/bin/install -c -o root -g bin
 INSTALL_PROG = $(INSTALL) -m 0755
-INSTALL_DATA = install  -o root -g wheel -m 444
+INSTALL_DATA = install -c -o root -g bin -m 444
 COPY = cp
 
 #### End of system configuration section. ####
 
 preload = 
 
-libpath = . $(libdir)
-LIBPATH =  -L'.' -L'$(libdir)' -Wl,-R'$(libdir)'
+libpath = . $(libdir) /usr/local/lib
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir) -L/usr/local/lib -Wl,-R/usr/local/lib
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -79,7 +80,7 @@ extout =
 extout_prefix = 
 target_prefix = 
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED) -lglib-2.0  -lcrypt -lm  -rpath=/usr/lib:/usr/local/lib -pthread  -lc
+LIBS = $(LIBRUBYARG_SHARED) -lglib-2.0  -lm   -lc
 SRCS = pemethods.c
 OBJS = pemethods.o
 TARGET = pemethods
@@ -119,7 +120,7 @@ pre-install-rb-default: Makefile
 $(RUBYARCHDIR):
 	$(MAKEDIRS) $@
 
-site-install: site-install-so site-install-rb install
+site-install: site-install-so site-install-rb
 site-install-so: install-so
 site-install-rb: install-rb
 
@@ -140,7 +141,7 @@ site-install-rb: install-rb
 .c.o:
 	$(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) -c $<
 
-$(DLLIB): $(OBJS)
+$(DLLIB): $(OBJS) Makefile
 	@-$(RM) $@
 	$(LDSHARED) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
 
