@@ -15,6 +15,7 @@ VALUE method_phi(VALUE self, VALUE n);
 VALUE method_is_prime(VALUE self, VALUE value);
 VALUE method_gcd(VALUE self, VALUE x, VALUE y);
 VALUE method_fact(VALUE self, VALUE x);
+VALUE method_count_digits(VALUE self, VALUE n);
 
 // The initialization method for this module
 void 
@@ -25,6 +26,7 @@ Init_pemethods()
     rb_define_method(PEMethods, "is_prime", method_is_prime, 1);
     rb_define_method(PEMethods, "gcd", method_gcd, 2);
     rb_define_method(PEMethods, "fact", method_fact, 1);
+    rb_define_method(PEMethods, "count_digits", method_count_digits, 1);
 }
 
 // Our 'test1' method.. it simply returns a value of '10' for now.
@@ -104,4 +106,10 @@ method_fact(VALUE self, VALUE x)
             accu *= i;
         }
         return rb_float_new(accu);
+}
+
+VALUE
+method_count_digits(VALUE self, VALUE n)
+{
+    return INT2NUM((int)log10(NUM2INT(n) + 1));
 }

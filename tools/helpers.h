@@ -135,3 +135,9 @@ array_copy(GArray *old)
     }
     return new;
 }
+
+gint
+count_digits(gint n)
+{
+    return (gint)(log10(n) + 1);
+}
