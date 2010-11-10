@@ -165,7 +165,7 @@ main(int argc, char **argv)
             GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
             0.9,			/* double  crossover */
             0.50,			/* double  mutation */
-            0.05              	/* double  migration */
+            0.1              	/* double  migration */
         );
     }
 
