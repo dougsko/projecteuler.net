@@ -54,10 +54,11 @@ text_a_small = text_a[0..299]
 # puts [65.to_s(16)].pack("H*")
 
 def check_word(array)
-    winner = "the"
-    test =  [array[0].to_s(16)].pack('H*') +
-            [array[1].to_s(16)].pack('H*') +
-            [array[2].to_s(16)].pack('H*')
+    test = ""
+    winner = "con"
+    array.each do |num|
+       test += [num.to_s(16)].pack('H*')
+    end
     return true if test == winner
     return false
 end    
@@ -69,7 +70,7 @@ end
 def get_result(text)
     sum = 0
     #key = [103, 110, 121]
-    key = [110, 104, 110]
+    key = [97, 110, 103]
     decrypted = []
     paragraph = []
     0.upto(text.size - 2) do |i|
@@ -86,6 +87,8 @@ end
 
 #get_result(text_a)
 #exit
+
+freq = {}
 word_s = ""
 97.upto(122) do |a|
     97.upto(122) do |b|
@@ -96,11 +99,17 @@ word_s = ""
                 z = text_a[i+2].to_i
                 word = [a ^ x, b ^ y, c ^ z]
                 if check_word(word)
-                    puts "#{a} #{b} #{c}"
+                    #puts "#{a} #{b} #{c}"
+                    if freq["#{a} #{b} #{c}"] == nil
+                        freq["#{a} #{b} #{c}"] = 1
+                    else
+                        freq["#{a} #{b} #{c}"] += 1
+                    end
                 end
                 i += 3
             end
         end
+        puts freq.sort{|aa,bb| aa[1] <=> bb[1]}.last.inspect
     end
 end
 

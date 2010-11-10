@@ -106,4 +106,32 @@ read_file(gchar *filename)
     return contents;
 }
 
+gint
+int_cmp(gconstpointer a, gconstpointer b)
+{
 
+    const gint *aa = (const gint *)a;
+    const gint *bb = (const gint *)b;
+
+    g_print("%d\t%d\n", *aa, *bb);
+    if(*aa > *bb)
+        return 1;
+    else if(*bb > *aa)
+        return -1;
+    else
+        return 0;
+}
+
+GArray *
+array_copy(GArray *old)
+{
+    GArray *new;
+    gint i;
+
+    new = g_array_new (FALSE, FALSE, sizeof (gint));
+    for(i =0; i < old->len; i++)
+    {
+        g_array_append_val(new, g_array_index(old, gint, i));
+    }
+    return new;
+}
