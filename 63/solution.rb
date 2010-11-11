@@ -11,7 +11,7 @@
 #
 
 count = 0
-0.upto(9) do |n|
+1.upto(9) do |n|
     count += (1 / (1 - Math::log10(n))).to_i
 end
 puts count
