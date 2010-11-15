@@ -1,6 +1,7 @@
 // Include the Ruby headers and goodies
 #include "ruby.h"
 #include <glib.h>
+#include <math.h>
 
 // Defining a space for information and references about the module to be 
 // stored internally
@@ -111,5 +112,5 @@ method_fact(VALUE self, VALUE x)
 VALUE
 method_count_digits(VALUE self, VALUE n)
 {
-    return INT2NUM((int)log10(NUM2INT(n) + 1));
+    return INT2NUM((int)log10(NUM2LONG(n)) + 1);
 }
