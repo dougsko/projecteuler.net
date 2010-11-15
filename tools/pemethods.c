@@ -2,6 +2,7 @@
 #include "ruby.h"
 #include <glib.h>
 #include <math.h>
+#include <gmp.h>
 
 // Defining a space for information and references about the module to be 
 // stored internally
@@ -30,7 +31,6 @@ Init_pemethods()
     rb_define_method(PEMethods, "count_digits", method_count_digits, 1);
 }
 
-// Our 'test1' method.. it simply returns a value of '10' for now.
 VALUE 
 method_phi(VALUE self, VALUE n) 
 {
@@ -95,6 +95,7 @@ method_gcd(VALUE self, VALUE x, VALUE y)
     return INT2NUM(a);
 }
 
+/* non-gmp function
 VALUE
 method_fact(VALUE self, VALUE x)
 {
@@ -108,6 +109,22 @@ method_fact(VALUE self, VALUE x)
         }
         return rb_float_new(accu);
 }
+*/
+
+VALUE
+method_fact(VALUE self, VALUE x)
+{
+    mpz_t n;
+    mpz_t fact;
+
+    mpz_init_set_ui(n, NUM2ULONG(x));
+    mpz_init(fact);
+
+    mpz_fac_ui(fact, NUM2ULONG(x));
+
+    return rb_str_new2(mpz_get_str(NULL, 10, fact));
+}
+
 
 VALUE
 method_count_digits(VALUE self, VALUE n)
