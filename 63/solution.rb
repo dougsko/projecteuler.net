@@ -11,14 +11,16 @@
 #
 
 count = 0
-1.upto 10000000000 do |i|
+i = 0
+loop do
     digits = i.to_s.size
     1.upto(10000) do |j|
-        break if j ** digits > i
-        if j ** digits == i
+        pow = j ** digits
+        break if pow > i
+        if pow == i
             count += 1
             puts "#{j}^#{digits} = #{i}"
         end
     end
+    i += 1
 end
-puts count

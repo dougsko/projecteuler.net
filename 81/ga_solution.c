@@ -164,8 +164,8 @@ main(int argc, char **argv)
             GA_SCHEME_DARWIN,	/* const ga_scheme_type     scheme */
             GA_ELITISM_PARENTS_DIE,	/* const ga_elitism_type   elitism */
             0.9,			/* double  crossover */
-            0.50,			/* double  mutation */
-            0.1              	/* double  migration */
+            0.75,			/* double  mutation */
+            0.6              	/* double  migration */
         );
     }
 
