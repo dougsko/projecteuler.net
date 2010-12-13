@@ -7,32 +7,35 @@ srcdir = .
 topdir = /usr/local/lib/ruby/1.8/amd64-freebsd7
 hdrdir = $(topdir)
 VPATH = $(srcdir):$(topdir):$(hdrdir)
-prefix = $(DESTDIR)/usr/local
 exec_prefix = $(prefix)
-sitedir = $(prefix)/lib/ruby/site_ruby
+prefix = $(DESTDIR)/usr/local
+sharedstatedir = $(prefix)/com
+mandir = $(DESTDIR)/usr/local/man
+psdir = $(docdir)
+oldincludedir = $(DESTDIR)/usr/include
+localedir = $(datarootdir)/locale
+bindir = $(exec_prefix)/bin
+libexecdir = $(exec_prefix)/libexec
+sitedir = $(libdir)/ruby/site_ruby
+htmldir = $(docdir)
+vendorarchdir = $(vendorlibdir)/$(sitearch)
+includedir = $(prefix)/include
+infodir = $(DESTDIR)/usr/local/info
+vendorlibdir = $(vendordir)/$(ruby_version)
+sysconfdir = $(prefix)/etc
+libdir = $(exec_prefix)/lib
+sbindir = $(exec_prefix)/sbin
 rubylibdir = $(libdir)/ruby/$(ruby_version)
 docdir = $(datarootdir)/doc/$(PACKAGE)
 dvidir = $(docdir)
+vendordir = $(libdir)/ruby/vendor_ruby
 datarootdir = $(prefix)/share
-archdir = $(rubylibdir)/$(arch)
-sbindir = $(exec_prefix)/sbin
-psdir = $(docdir)
-localedir = $(datarootdir)/locale
-htmldir = $(docdir)
-datadir = $(datarootdir)
-includedir = $(prefix)/include
-infodir = $(DESTDIR)/usr/local/info/
-sysconfdir = $(prefix)/etc
-mandir = $(DESTDIR)/usr/local/man
-libdir = $(exec_prefix)/lib
-sharedstatedir = $(prefix)/com
-oldincludedir = $(DESTDIR)/usr/include
 pdfdir = $(docdir)
+archdir = $(rubylibdir)/$(arch)
 sitearchdir = $(sitelibdir)/$(sitearch)
-bindir = $(exec_prefix)/bin
+datadir = $(datarootdir)
 localstatedir = $(prefix)/var
 sitelibdir = $(sitedir)/$(ruby_version)
-libexecdir = $(exec_prefix)/libexec
 
 CC = cc
 LIBRUBY = $(LIBRUBY_SO)
@@ -41,11 +44,15 @@ LIBRUBYARG_SHARED = -Wl,-R -Wl,$(libdir) -L$(libdir) -l$(RUBY_SO_NAME)
 LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
 
 RUBY_EXTCONF_H = 
-CFLAGS   =  -fPIC -O2 -fno-strict-aliasing -pipe    -fPIC 
-INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/amd64-freebsd7 -I.
-CPPFLAGS = -DHAVE_MATH_H `pkg-config --cflags glib-2.0`
+CFLAGS   =  -fPIC -I/usr/include -O2 -fno-strict-aliasing -pipe  -fPIC $(cflags) 
+INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/amd64-freebsd7 -I. -I/usr/local/include
+DEFS     = 
+CPPFLAGS = -DHAVE_MATH_H -DHAVE_OMP_H -I/usr/include   -I/usr/include `pkg-config --cflags glib-2.0`
 CXXFLAGS = $(CFLAGS) 
-DLDFLAGS = -L.  -rdynamic  -Wl,-soname,$(.TARGET) 
+ldflags  = -L.  -rpath=/usr/lib:/usr/local/lib -rdynamic
+dldflags =  -Wl,-soname,$(.TARGET)
+archflag = 
+DLDFLAGS = $(ldflags) $(dldflags) $(archflag)
 LDSHARED = cc -shared
 AR = ar
 EXEEXT = 
@@ -69,7 +76,7 @@ COPY = cp
 preload = 
 
 libpath = . $(libdir)
-LIBPATH =  -L'.' -L'$(libdir)' -Wl,-R'$(libdir)'
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir)
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -79,7 +86,7 @@ extout =
 extout_prefix = 
 target_prefix = 
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED) -lglib-2.0  -lcrypt -lm  -rpath=/usr/lib:/usr/local/lib -pthread  -lc
+LIBS = $(LIBRUBYARG_SHARED) -lpthread -lglib-2.0  -lcrypt -lm -L/usr/lib  -rpath=/usr/lib:/usr/local/lib 
 SRCS = pemethods.c
 OBJS = pemethods.o
 TARGET = pemethods
@@ -87,6 +94,7 @@ DLLIB = $(TARGET).so
 EXTSTATIC = 
 STATIC_LIB = 
 
+BINDIR        = $(bindir)
 RUBYCOMMONDIR = $(sitedir)$(target_prefix)
 RUBYLIBDIR    = $(sitelibdir)$(target_prefix)
 RUBYARCHDIR   = $(sitearchdir)$(target_prefix)
@@ -140,7 +148,7 @@ site-install-rb: install-rb
 .c.o:
 	$(CC) $(INCFLAGS) $(CPPFLAGS) $(CFLAGS) -c $<
 
-$(DLLIB): $(OBJS)
+$(DLLIB): $(OBJS) Makefile
 	@-$(RM) $@
 	$(LDSHARED) -o $@ $(OBJS) $(LIBPATH) $(DLDFLAGS) $(LOCAL_LIBS) $(LIBS)
 

@@ -16,12 +16,30 @@
 #
 
 require 'bigdecimal'
+require 'pe97'
 
-a = BigDecimal.new('2')
-b = a ** 7830457
-c = 28433 * b
-d = c + 1
-d_a = d.to_s('F').split('.')[0].split('')
+include PE97
 
-puts d_a[(d_a.size - 10)..d_a.size].inspect
+class Solution
+    def initialize
+    end
+
+    def ruby_solution
+        a = BigDecimal.new('2')
+        b = a ** 7830457
+        c = 28433 * b
+        d = c + 1
+        d_a = d.to_s('F').split('.')[0].split('')
+
+        puts d_a[(d_a.size - 10)..d_a.size]
+    end
+
+    def c_solution
+        prime = get_prime
+        puts prime[(prime.size - 10)..prime.size]
+    end
+end
+
+solution = Solution.new
+solution.c_solution
 

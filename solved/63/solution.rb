@@ -11,6 +11,7 @@
 #
 
 count = 0
+<<<<<<< HEAD:63/solution.rb
 i = 0
 loop do
     digits = i.to_s.size
@@ -23,4 +24,8 @@ loop do
         end
     end
     i += 1
+=======
+1.upto(9) do |n|
+    count += (1 / (1 - Math::log10(n))).to_i
+>>>>>>> e00379407b4f55583e38b40a7d50e75d46e98da4:solved/63/solution.rb
 end

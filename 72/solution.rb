@@ -19,7 +19,7 @@
 # fractions for d 1,000,000?
 #
 
-require '../tools/pemethods'
+require '../tools/pemethods.so'
 
 include PEMethods
 
