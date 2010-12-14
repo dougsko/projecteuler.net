@@ -47,7 +47,7 @@ RUBY_EXTCONF_H =
 CFLAGS   =  -fPIC -I/usr/include -O2 -fno-strict-aliasing -pipe  -fPIC $(cflags) 
 INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/amd64-freebsd7 -I. -I/usr/local/include
 DEFS     = 
-CPPFLAGS = -DHAVE_MATH_H -DHAVE_OMP_H -I/usr/include   -I/usr/include `pkg-config --cflags glib-2.0`
+CPPFLAGS = -DHAVE_MATH_H -I/usr/include   -I/usr/include -lgmp -fopenmp `pkg-config --cflags glib-2.0`
 CXXFLAGS = $(CFLAGS) 
 ldflags  = -L.  -rpath=/usr/lib:/usr/local/lib -rdynamic
 dldflags =  -Wl,-soname,$(.TARGET)
@@ -86,9 +86,9 @@ extout =
 extout_prefix = 
 target_prefix = 
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED) -lpthread -lglib-2.0  -lcrypt -lm -L/usr/lib  -rpath=/usr/lib:/usr/local/lib 
-SRCS = pemethods.c
-OBJS = pemethods.o
+LIBS = $(LIBRUBYARG_SHARED) -lgmp -lglib-2.0  -lcrypt -lm -L/usr/lib  -rpath=/usr/lib:/usr/local/lib 
+SRCS = pemethods.c helpers.c
+OBJS = pemethods.o helpers.o
 TARGET = pemethods
 DLLIB = $(TARGET).so
 EXTSTATIC = 
