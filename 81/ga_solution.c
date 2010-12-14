@@ -7,7 +7,7 @@
  * 532246
  *
  */
-#include "gaul.h"
+#include <gaul.h>
 #include "../tools/helpers.h"
 
 #define GA_STRUGGLE_NUM_POPS    20
@@ -141,7 +141,7 @@ main(int argc, char **argv)
     for (i=0; i < GA_STRUGGLE_NUM_POPS; i++)
     {
         pop[i] = ga_genesis_bitstring(
-            1000,			/* const int              population_size */
+            100,			/* const int              population_size */
             1,				/* const int              num_chromo */
             101,			/* const int              len_chromo */
             NULL,			/* GAgeneration_hook      generation_hook */
