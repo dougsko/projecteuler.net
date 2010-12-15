@@ -1,4 +1,4 @@
-require '/home/doug/projecteuler.net/tools/pemethods.so'
+require 'pemethods.so'
 
 include PEMethods
 
@@ -14,7 +14,7 @@ class Prime
     else
       i = @last_prime + 1
       i += 1 if i % 2 == 0
-      while not i.isPrime?
+      while not is_prime(i)
         i += 2
       end
       @last_prime = i

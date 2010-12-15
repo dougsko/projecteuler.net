@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <glib.h>
 #include "helpers.h"
 
 GArray *
@@ -16,29 +14,6 @@ make_prime_array(gint num)
     }
     return primes;
 }
-
-int
-print_array(GArray *array)
-{
-    int i;
-    for(i=0; i < array->len; i++){
-        printf("%d\n", g_array_index(array, gint, i));
-    }
-    return 0;
-}
-
-gint
-sum_array(GArray *array)
-{
-    gint i;
-    gint sum = 0;
-
-    for(i=0; i < array->len; i++){
-        sum = sum + g_array_index(array, gint, i);
-    }
-    return sum;
-}
-
 
 int 
 main()
@@ -66,13 +41,15 @@ main()
                     biggest_prime = sum;
                 }
            }
-           g_array_free(primes_subset, TRUE);
+           if(primes_subset)
+             g_array_free(primes_subset, TRUE);
            primes_subset = g_array_new(FALSE, FALSE, sizeof(gint));
            sum = 0;
         }
     }
     printf("%d is the sum of %d primes\n", biggest_prime, longest_window);
                   
-    g_array_free(primes, TRUE);
+    if(primes)
+      g_array_free(primes, TRUE);
     return 0;
 }

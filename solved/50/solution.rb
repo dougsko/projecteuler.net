@@ -16,7 +16,7 @@
 # Which prime, below one-million, can be written as the sum of the most
 # consecutive primes?
 #
-require '../tools/helpers.rb'
+require 'pemethods'
 
 def sum_a(array)
     sum = 0
