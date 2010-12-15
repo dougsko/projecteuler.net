@@ -30,15 +30,11 @@
 
 require '../tools/pemethods'
 
-def run_it(n, a, b)
-   return  n**2 + a*n + b
-end
-
 n = 0
 old_n = 0
 -1000.upto 1000 do |a|
     -1000.upto 1000 do |b|
-        while is_prime(run_it(n, a, b))
+        while is_prime(n**2 + a*n + b)
             n += 1
         end
         if n > old_n
