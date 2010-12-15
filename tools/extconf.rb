@@ -2,7 +2,7 @@
 require 'rubygems'
 require 'mkmf'
 
-$CPPFLAGS << "-lgmp -fopenmp `pkg-config --cflags glib-2.0`"
+$CPPFLAGS << "-I/usr/local/include -lgmp -fopenmp `pkg-config --cflags glib-2.0`"
 dir_config(ENV['PWD'])
 
 have_header('math.h')

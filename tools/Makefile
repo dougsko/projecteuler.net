@@ -4,25 +4,25 @@ SHELL = /bin/sh
 #### Start of system configuration section. ####
 
 srcdir = .
-topdir = /usr/lib/ruby/1.8/i486-linux
+topdir = /usr/local/lib/ruby/1.8/amd64-freebsd7
 hdrdir = $(topdir)
 VPATH = $(srcdir):$(topdir):$(hdrdir)
 exec_prefix = $(prefix)
-prefix = $(DESTDIR)/usr
+prefix = $(DESTDIR)/usr/local
 sharedstatedir = $(prefix)/com
-mandir = $(prefix)/share/man
+mandir = $(DESTDIR)/usr/local/man
 psdir = $(docdir)
 oldincludedir = $(DESTDIR)/usr/include
 localedir = $(datarootdir)/locale
 bindir = $(exec_prefix)/bin
-libexecdir = $(prefix)/lib/ruby1.8
-sitedir = $(DESTDIR)/usr/local/lib/site_ruby
+libexecdir = $(exec_prefix)/libexec
+sitedir = $(libdir)/ruby/site_ruby
 htmldir = $(docdir)
 vendorarchdir = $(vendorlibdir)/$(sitearch)
 includedir = $(prefix)/include
-infodir = $(prefix)/share/info
+infodir = $(DESTDIR)/usr/local/info
 vendorlibdir = $(vendordir)/$(ruby_version)
-sysconfdir = $(DESTDIR)/etc
+sysconfdir = $(prefix)/etc
 libdir = $(exec_prefix)/lib
 sbindir = $(exec_prefix)/sbin
 rubylibdir = $(libdir)/ruby/$(ruby_version)
@@ -34,41 +34,41 @@ pdfdir = $(docdir)
 archdir = $(rubylibdir)/$(arch)
 sitearchdir = $(sitelibdir)/$(sitearch)
 datadir = $(datarootdir)
-localstatedir = $(DESTDIR)/var
+localstatedir = $(prefix)/var
 sitelibdir = $(sitedir)/$(ruby_version)
 
-CC = gcc
+CC = cc
 LIBRUBY = $(LIBRUBY_SO)
 LIBRUBY_A = lib$(RUBY_SO_NAME)-static.a
-LIBRUBYARG_SHARED = -l$(RUBY_SO_NAME)
+LIBRUBYARG_SHARED = -Wl,-R -Wl,$(libdir) -L$(libdir) -l$(RUBY_SO_NAME)
 LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
 
 RUBY_EXTCONF_H = 
-CFLAGS   =  -fPIC -fno-strict-aliasing -g -g -O2  -fPIC $(cflags) 
-INCFLAGS = -I. -I. -I/usr/lib/ruby/1.8/i486-linux -I.
-DEFS     = -D_FILE_OFFSET_BITS=64
-CPPFLAGS = -DHAVE_MATH_H -DHAVE_GMP_H -DHAVE_HELPERS_H  -D_FILE_OFFSET_BITS=64 -lgmp -fopenmp `pkg-config --cflags glib-2.0`
+CFLAGS   =  -fPIC -I/usr/include -O2 -fno-strict-aliasing -pipe  -fPIC $(cflags) 
+INCFLAGS = -I. -I. -I/usr/local/lib/ruby/1.8/amd64-freebsd7 -I.
+DEFS     = 
+CPPFLAGS = -DHAVE_MATH_H -DHAVE_GMP_H -DHAVE_HELPERS_H -I/usr/include   -I/usr/include -I/usr/local/include -lgmp -fopenmp `pkg-config --cflags glib-2.0`
 CXXFLAGS = $(CFLAGS) 
-ldflags  = -L. -Wl,-Bsymbolic-functions -rdynamic -Wl,-export-dynamic
-dldflags = 
+ldflags  = -L.  -rpath=/usr/lib:/usr/local/lib -rdynamic
+dldflags =  -Wl,-soname,$(.TARGET)
 archflag = 
 DLDFLAGS = $(ldflags) $(dldflags) $(archflag)
-LDSHARED = $(CC) -shared
+LDSHARED = cc -shared
 AR = ar
 EXEEXT = 
 
-RUBY_INSTALL_NAME = ruby1.8
-RUBY_SO_NAME = ruby1.8
-arch = i486-linux
-sitearch = i486-linux
+RUBY_INSTALL_NAME = ruby18
+RUBY_SO_NAME = ruby18
+arch = amd64-freebsd7
+sitearch = amd64-freebsd7
 ruby_version = 1.8
-ruby = /usr/bin/ruby1.8
+ruby = /usr/local/bin/ruby18
 RUBY = $(ruby)
 RM = rm -f
 MAKEDIRS = mkdir -p
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/bin/install -c -o root -g wheel
 INSTALL_PROG = $(INSTALL) -m 0755
-INSTALL_DATA = $(INSTALL) -m 644
+INSTALL_DATA = install  -o root -g wheel -m 444
 COPY = cp
 
 #### End of system configuration section. ####
@@ -76,7 +76,7 @@ COPY = cp
 preload = 
 
 libpath = . $(libdir)
-LIBPATH =  -L. -L$(libdir)
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir)
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -86,7 +86,7 @@ extout =
 extout_prefix = 
 target_prefix = 
 LOCAL_LIBS = 
-LIBS = $(LIBRUBYARG_SHARED) -lgmp -lglib-2.0  -lpthread -lrt -ldl -lcrypt -lm   -lc
+LIBS = $(LIBRUBYARG_SHARED) -lgmp -lglib-2.0  -lcrypt -lm -L/usr/lib  -rpath=/usr/lib:/usr/local/lib 
 SRCS = pemethods.c helpers.c test.c
 OBJS = pemethods.o helpers.o test.o
 TARGET = pemethods
@@ -127,7 +127,7 @@ pre-install-rb-default: Makefile
 $(RUBYARCHDIR):
 	$(MAKEDIRS) $@
 
-site-install: site-install-so site-install-rb
+site-install: site-install-so site-install-rb install
 site-install-so: install-so
 site-install-rb: install-rb
 
