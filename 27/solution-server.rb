@@ -36,10 +36,10 @@ class TupleSpacePE27
 
 		@ts.write [:old_n, 0] # seed prime
 		@ts.write [:current, 0] # next value to search
-		@ts.write [:step, 1] # range of values to search
-        	@ts.write [:max, 10]
         	@ts.write [:a, 0]
         	@ts.write [:b, 0]
+		@ts.write [:step, 100] # range of values to search
+	        @ts.write [:max, 1000]
 
 		DRb.start_service "druby://#{host}:7777", @ts
 
