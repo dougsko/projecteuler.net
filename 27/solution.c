@@ -3,15 +3,16 @@
 gint
 main()
 {
-    gint n, old_n, a, b = 0;
+    gint n, old_n, a, b;
+    n, old_n = 0;
 
     omp_set_num_threads(4);
-    #pragma omp parallel for private(n)
-    for(a = -10; a <= 10; a++)
+    #pragma omp parallel for
+    for(a = -1000; a <= 1000; a++)
     {
-        for(b = -10; b <= 10; b++)
+        for(b = -1000; b <= 1000; b++)
         {
-            while(is_prime(n * n + a * n + b))
+            while(is_prime(n*n + a*n + b))
                 n++;
             if(n > old_n)
             {

@@ -23,10 +23,10 @@ class TupleSpacePE27
 	# Lists primes as they are added to the TupleSpace.
 	def list_count
 		Thread.start do
-			notifier = @ts.notify 'write', [:old_end, nil]
+			notifier = @ts.notify 'write', [:old_n, nil]
 			notifier.each do |_, t|
-				puts t.last
-                puts "n: #{@ts.read([:old_n, nil]).last} a: #{@ts.read([:a, nil]).last} b: #{@ts.read([:b, nil]).last} a*b: #{@ts.read([:a, nil]).last.to_i* @ts.read([:b, nil]).last.to_i}"
+			    #puts t.last
+                	    puts "n: #{@ts.read([:old_n, nil]).sort.last} a: #{@ts.read([:a, nil]).last} b: #{@ts.read([:b, nil]).last} a*b: #{@ts.read([:a, nil]).last.to_i* @ts.read([:b, nil]).last.to_i}"
 			end
 		end
 	end
@@ -35,7 +35,7 @@ class TupleSpacePE27
         	list_count 
 
 		@ts.write [:old_n, 0] # seed prime
-		@ts.write [:current, 1] # next value to search
+		@ts.write [:current, 0] # next value to search
 		@ts.write [:step, 1] # range of values to search
         	@ts.write [:max, 10]
         	@ts.write [:a, 0]

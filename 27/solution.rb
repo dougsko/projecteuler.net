@@ -32,8 +32,8 @@ require '../tools/pemethods'
 
 n = 0
 old_n = 0
--100.upto 100 do |a|
-    -100.upto 100 do |b|
+-1000.upto 1000 do |a|
+    -1000.upto 1000 do |b|
        	while is_prime(n*n + a*n + b) == true
 	    n += 1
 	end
