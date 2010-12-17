@@ -16,32 +16,33 @@ class PE27Client
 	end
 
 	def find
-        finish = 0
-        max = 0
-        step = @ts.read([:step, nil]).last
-        loop do
-			start = @ts.take([:current, nil]).last - 1000 # start of our search space
-			finish = start + step # items in our search space
-            old_n = @ts.read([:old_n, nil]).last
-            max = @ts.read([:max, nil]).last
+        	finish = 0
+        	max = 0
+        	step = @ts.read([:step, nil]).last
+        	loop do
+			start = @ts.take([:current, nil]).last - 1001
+			finish = start + step
+			@ts.write [:current, finish] 
+            		old_n = @ts.read([:old_n, nil]).last
+            		max = @ts.read([:max, nil]).last
 
-            break if finish > max
+            		break if finish > max
 			
-            @ts.write [:current, finish] # write it back
-            n = 0
-            start.upto(finish) do |a|
-                -1000.upto 1000 do |b|
-                    while is_prime(n**2 + a*n + b)
-                        n += 1
-                    end
-                    if n > old_n
-                        @ts.write [:a, a]
-                        @ts.write [:b, b]
-                        @ts.write [:old_n, n]
-                    end
-                    n = 0
-                end
-            end
+            		n = 0
+            		start.upto(finish) do |a|
+                		0.upto 10 do |b|
+					puts a
+					puts b
+					puts n
+                    			n+= 1 while is_prime(n**2 + a*n + b)
+                    			if n > old_n
+                        			@ts.write [:a, a]
+                        			@ts.write [:b, b]
+                        			@ts.write [:old_n, n]
+                    			end
+                    			n = 0
+				end
+                	end
 		end
 	end
 end

@@ -33,6 +33,9 @@ phi(gint n)
 gint 
 is_prime(glong value)
 {
+    if(value < 0)
+	return 0;
+
     glong j, r, rold, rnew;
     r = 0;
     rnew = 1;

@@ -32,11 +32,11 @@ require '../tools/pemethods'
 
 n = 0
 old_n = 0
--1000.upto 1000 do |a|
-    -1000.upto 1000 do |b|
-        while is_prime(n**2 + a*n + b)
-            n += 1
-        end
+-100.upto 100 do |a|
+    -100.upto 100 do |b|
+       	while is_prime(n*n + a*n + b) == true
+	    n += 1
+	end
         if n > old_n
             old_n = n
             puts "n: #{n} a: #{a} b: #{b} a*b: #{a*b}"

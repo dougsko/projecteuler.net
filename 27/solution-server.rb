@@ -25,21 +25,21 @@ class TupleSpacePE27
 		Thread.start do
 			notifier = @ts.notify 'write', [:old_end, nil]
 			notifier.each do |_, t|
-				#puts t.last
+				puts t.last
                 puts "n: #{@ts.read([:old_n, nil]).last} a: #{@ts.read([:a, nil]).last} b: #{@ts.read([:b, nil]).last} a*b: #{@ts.read([:a, nil]).last.to_i* @ts.read([:b, nil]).last.to_i}"
 			end
 		end
 	end
 
 	def run(host)
-        list_count 
+        	list_count 
 
 		@ts.write [:old_n, 0] # seed prime
-		@ts.write [:current, 0] # next value to search
-		@ts.write [:step, 10] # range of values to search
-        @ts.write [:max, 1000]
-        @ts.write [:a, 0]
-        @ts.write [:b, 0]
+		@ts.write [:current, 1] # next value to search
+		@ts.write [:step, 1] # range of values to search
+        	@ts.write [:max, 10]
+        	@ts.write [:a, 0]
+        	@ts.write [:b, 0]
 
 		DRb.start_service "druby://#{host}:7777", @ts
 

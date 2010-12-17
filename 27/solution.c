@@ -7,9 +7,9 @@ main()
 
     omp_set_num_threads(4);
     #pragma omp parallel for private(n)
-    for(a = -1000; a <= 1000; a++)
+    for(a = -10; a <= 10; a++)
     {
-        for(b = -1000; b <= 1000; b++)
+        for(b = -10; b <= 10; b++)
         {
             while(is_prime(n * n + a * n + b))
                 n++;
