@@ -11,7 +11,7 @@ module PEMethods
 
     attach_function :gcd, [:int, :int], :int
     attach_function :phi, [:int], :float
-    attach_function :is_prime, [:long], :int
+    attach_function :is_prime, [:long], :bool
     attach_function :factorial, [:ulong], :string
     attach_function :count_digits, [:int], :int
 end
