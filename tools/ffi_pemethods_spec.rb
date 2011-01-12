@@ -1,4 +1,6 @@
-require 'pemethods'
+require 'ffi_pemethods'
+
+include PEMethods
 
 describe "PEMethods" do
     before do
