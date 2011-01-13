@@ -139,7 +139,7 @@ array_copy(GArray *old)
 }
 
 gint
-count_digits(gint n)
+count_digits(gdouble n)
 {
     return (gint)(log10(n) + 1);
 }

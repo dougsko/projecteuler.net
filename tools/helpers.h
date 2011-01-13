@@ -14,4 +14,4 @@ gint sum_array(GArray *array);
 gchar * read_file(gchar *filename);
 gint int_cmp(gconstpointer a, gconstpointer b);
 GArray * array_copy(GArray *old);
-gint count_digits(gint n);
+gint count_digits(gdouble n);

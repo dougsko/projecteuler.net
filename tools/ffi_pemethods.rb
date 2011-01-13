@@ -13,5 +13,5 @@ module PEMethods
     attach_function :phi, [:int], :float
     attach_function :is_prime, [:long], :bool
     attach_function :factorial, [:ulong], :string
-    attach_function :count_digits, [:int], :int
+    attach_function :count_digits, [:double], :int
 end
