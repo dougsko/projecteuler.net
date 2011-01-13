@@ -5,6 +5,7 @@
 
 require 'rubygems'
 require 'rake'
+require 'rake/clean'
 
 task :default => [:make]
 
@@ -14,9 +15,10 @@ task :make do
 
     sh "gcc -fopenmp -shared -Wl,-soname,helpers.so \
         -o helpers.so helpers.o -lm -lgmp" 
-
-    sh "rm *.o"
 end
+
+CLEAN.include("*.o")
+CLOBBER.include("*.so")
 
 require 'rspec/core'
 require 'rspec/core/rake_task'
