@@ -7,7 +7,7 @@ require 'ffi'
 
 module PEMethods
     extend FFI::Library
-    ffi_lib './helpers.so'
+    ffi_lib "../tools/helpers.so"
 
     attach_function :gcd, [:int, :int], :int
     attach_function :phi, [:int], :float
