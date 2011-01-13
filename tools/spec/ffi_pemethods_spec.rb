@@ -35,7 +35,7 @@ describe "PEMethods" do
         10.times do
             a = []
             rand(10).times do
-                a << rand(100)
+                a << rand(10)
                 n = a.join('').to_i
                 count_digits(n).should == n.to_s.length
                 puts "#{n} is #{count_digits(n)} digits long."
