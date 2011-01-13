@@ -1,5 +1,5 @@
 /* Helper functions for projecteuler.net problems. */
-#include "libpe.h"
+#include "pe.h"
 
 gint
 gcd(gint a, gint b)

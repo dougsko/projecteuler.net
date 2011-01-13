@@ -11,10 +11,10 @@ task :default => [:make]
 
 task :make do
     sh "gcc -Wall -fPIC -c `pkg-config --cflags --libs glib-2.0` \
-        -fopenmp  -I. libpe.c" 
+        -fopenmp  -I. pe.c" 
 
     sh "gcc -fopenmp -shared -Wl,-soname,libpe.so \
-        -o libpe.so libpe.o -lm -lgmp `pkg-config --libs glib-2.0`" 
+        -o libpe.so pe.o -lm -lgmp `pkg-config --libs glib-2.0`" 
 end
 
 CLEAN.include("*.o")
