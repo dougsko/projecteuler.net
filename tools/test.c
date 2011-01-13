@@ -9,7 +9,7 @@ main()
     gint i, j;
     gfloat p;
 
-    omp_set_num_threads(4);
+    omp_set_num_threads(2);
     #pragma omp parallel for default(shared)
     for(j = 0; j <= 100000; j++)
     {
