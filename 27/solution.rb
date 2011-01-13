@@ -28,7 +28,9 @@
 # values of n, starting with n = 0.
 #
 
-require '../tools/pemethods'
+require '../tools/ffi_pe'
+
+include PEMethods
 
 n = 0
 old_n = 0

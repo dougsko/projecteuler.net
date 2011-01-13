@@ -1,4 +1,4 @@
-require 'ffi_pemethods'
+require 'ffi_pe'
 
 include PEMethods
 
@@ -32,14 +32,12 @@ describe "PEMethods" do
     end
 
     it "tests count_digits" do
-        10.times do
-            a = []
-            rand(10).times do
-                a << rand(10)
-                n = a.join('').to_i
-                count_digits(n).should == n.to_s.length
-                puts "#{n} is #{count_digits(n)} digits long."
-            end
+        a = ""
+        1.upto 10 do |i|
+            a << i.to_s
+            n = a.to_i
+            count_digits(n).should == n.to_s.length
+            puts "#{n} is #{count_digits(n)} digits long."
         end
     end
 end
