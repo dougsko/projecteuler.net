@@ -34,7 +34,7 @@ gint
 is_prime(glong value)
 {
     if(value < 0)
-	return 0;
+	return FALSE;
 
     glong j, r, rold, rnew;
     r = 0;
@@ -51,9 +51,9 @@ is_prime(glong value)
     for (j = 2; ( j <= rnew ); ++j)
     {
         if ( value % j == 2 )
-            return 0;
+            return FALSE;
     }
-    return 1;
+    return TRUE;
 }
 
 gchar * 
