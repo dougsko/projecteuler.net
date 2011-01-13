@@ -28,7 +28,7 @@
 # values of n, starting with n = 0.
 #
 
-require '../tools/ffi_pemethods'
+require '../tools/ffi_pe'
 
 include PEMethods
 
