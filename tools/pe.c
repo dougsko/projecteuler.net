@@ -30,27 +30,15 @@ phi(gint n)
     return result; 
 }
 
-gint 
+gboolean 
 is_prime(glong value)
 {
-    if(value < 0)
-	return FALSE;
-
-    glong j, r, rold, rnew;
-    r = 0;
-    rnew = 1;
-    do 
+    int i;
+    if (value <= 1) 
+        return FALSE;
+    for (i=2; i*i<=value; i++)
     {
-        rold = r;
-        r = rnew;
-        rnew = ( r + ( value / r ) );
-        rnew >>= 1;
-    } 
-    while( rold != rnew );
-    
-    for (j = 2; ( j <= rnew ); ++j)
-    {
-        if ( value % j == 2 )
+        if (value % i == 0) 
             return FALSE;
     }
     return TRUE;

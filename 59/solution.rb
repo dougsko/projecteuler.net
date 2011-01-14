@@ -37,14 +37,14 @@
 #
 
 
-text_a = []
+@text_a = []
 
 File.open('cipher1.txt', 'r') do |f|
     text_a << f.readlines
 end
 
-text_a = text_a.join(',').chomp.split(',')
-text_a_small = text_a[0..299]
+@text_a = text_a.join(',').chomp.split(',')
+text_a_small = @text_a[0..299]
 
 # lower case letters
 # 97 - 122 base10
@@ -53,11 +53,20 @@ text_a_small = text_a[0..299]
 # puts 65.to_s(16)
 # puts 65.chr
 
+def try_this(a, b, c)
+    key_a = []
+    400.times do
+        key_a << a
+        key_a << b
+        key_a << c
+    end
+    puts key_a.size
+end
+
 97.upto(122) do |a|
     97.upto(122) do |b|
         97.upto(122) do |c|
-            key = [a, b, c]
+            try_this(a, b, c)
         end
     end
 end
-

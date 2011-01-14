@@ -12,22 +12,20 @@ describe "PEMethods" do
     end
 
     it "tests is_prime" do
-        a = is_prime(9)
+        a = is_prime(2)
         b = is_prime(8)
-        a.should == true and b.should == false
-        puts "9 is prime and 8 is not."
+        c = is_prime(4)
+        a.should == true and b.should == false and c.should == false
     end
 
     it "tests gcd" do
         gcd(10,20).should == 10
-        puts "gcd of 10 and 20 is 10."
     end            
 
     it "tests factorial" do
         facts = [1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800]
         1.upto(10) do |i|
             factorial(i).to_i.should == facts[i-1]
-            puts "The factorial of #{i} is #{facts[i-1]}."
         end
     end
 
@@ -37,7 +35,6 @@ describe "PEMethods" do
             a << i.to_s
             n = a.to_i
             count_digits(n).should == n.to_s.length
-            puts "#{n} is #{count_digits(n)} digits long."
         end
     end
 end

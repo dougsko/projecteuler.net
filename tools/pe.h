@@ -7,7 +7,7 @@
 
 gint gcd(gint a, gint b);
 gfloat phi(gint n);
-gint is_prime(glong value);
+gboolean is_prime(glong value);
 gchar * factorial(gulong n);
 gint print_array(GArray *array);
 gint sum_array(GArray *array);
