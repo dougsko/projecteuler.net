@@ -15,22 +15,32 @@
 int
 main()
 {
-    double max = 50000000;
-    max = 50;
+    double max = 50;
     double out;
-    double i, j, k;
+    int i, j, k;
+    int count = 0;
 
+    omp_set_num_threads(4);
+    #pragma omp parallel for
     for(i = 2; i <= max; i++)
     {
-        for(j = 2; i <= max; i++)
+        for(j = 2; j <= max; j++)
         {
-            for(k = 2; i <= max; i++)
+            for(k = 2; k <= max; k++)
             {
-                out = pow(i, 2) + pow(j, 3) + pow(k, 4);
-                printf("%0.f\n", out);
+                if(is_prime(i) && is_prime(j) && is_prime(k))
+                {
+                    out = i*i + j*j*j + k*k*k*k;
+                    if(out < max)
+                    {
+                        printf("%0.f = %0.f^2 + %0.f^3 + %0.f^4\n", out, i, j, k);
+                        count++;
+                    }
+                }
             }
         }
     }
+    printf("count = %d\n", count);
 
     return 0;
 }

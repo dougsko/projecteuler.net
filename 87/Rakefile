@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+#
+# Build helpers.c
+#
+
+require 'rubygems'
+require 'rake'
+require 'rake/clean'
+
+task :default => [:make]
+
+task :make do
+    sh "gcc -fopenmp -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
+    sh "gcc -L../tools -o solution solution.o -lpe"
+#    sh "export LD_LIBRARY_PATH=../tools"
+end
+
+CLEAN.include("*.o")
+CLOBBER.include("*.so")
+
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+      spec.pattern = FileList['spec/**/*_spec.rb']
+end
