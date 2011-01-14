@@ -28,19 +28,17 @@
 # values of n, starting with n = 0.
 #
 
-require '../tools/helpers.rb'
+require '../tools/ffi_pe'
 
-def run_it(n, a, b)
-   return  n**2 + a*n + b
-end
+include PEMethods
 
 n = 0
 old_n = 0
 -1000.upto 1000 do |a|
     -1000.upto 1000 do |b|
-        while run_it(n, a, b).isPrime?
-            n += 1
-        end
+       	while is_prime(n*n + a*n + b) == true
+	    n += 1
+	end
         if n > old_n
             old_n = n
             puts "n: #{n} a: #{a} b: #{b} a*b: #{a*b}"
