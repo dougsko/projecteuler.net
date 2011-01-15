@@ -21,6 +21,7 @@ main()
     int count = 0;
 
     omp_set_num_threads(4);
+    
     #pragma omp parallel for
     for(i = 2; i <= max; i++)
     {
@@ -33,7 +34,7 @@ main()
                     out = i*i + j*j*j + k*k*k*k;
                     if(out < max)
                     {
-                        printf("%0.f = %0.f^2 + %0.f^3 + %0.f^4\n", out, i, j, k);
+                        printf("%0.f = %d^2 + %d^3 + %d^4\n", out, i, j, k);
                         count++;
                     }
                 }
