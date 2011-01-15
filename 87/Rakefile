@@ -10,13 +10,13 @@ require 'rake/clean'
 task :default => [:make]
 
 task :make do
-    sh "gcc -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
-    sh "gcc -fopenmp -L../tools -o solution solution.o -lpe"
+    sh "gcc  -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
+    sh "gcc -fopenmp -L../tools `pkg-config --libs glib-2.0` solution.o -o solution -lpe"
 #    sh "export LD_LIBRARY_PATH=../tools"
 end
 
 CLEAN.include("*.o")
-CLOBBER.include("*.so")
+CLOBBER.include("*.so", "solution")
 
 require 'rspec/core'
 require 'rspec/core/rake_task'

@@ -15,7 +15,7 @@
 int
 main()
 {
-    double max = 50;
+    double max = 500000;
     double out;
     int i, j, k;
     int count = 0;
@@ -34,7 +34,7 @@ main()
                     out = i*i + j*j*j + k*k*k*k;
                     if(out < max)
                     {
-                        printf("%0.f = %d^2 + %d^3 + %d^4\n", out, i, j, k);
+                        //printf("%0.f = %0.f^2 + %0.f^3 + %0.f^4\n", out, i, j, k);
                         count++;
                     }
                 }
