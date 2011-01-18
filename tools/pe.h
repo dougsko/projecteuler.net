@@ -15,3 +15,4 @@ gchar * read_file(gchar *filename);
 gint int_cmp(gconstpointer a, gconstpointer b);
 GArray * array_copy(GArray *old);
 gint count_digits(gdouble n);
+gboolean is_bouncy(gstring n);

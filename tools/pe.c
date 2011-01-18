@@ -131,3 +131,28 @@ count_digits(gdouble n)
 {
     return (gint)(log10(n) + 1);
 }
+
+gboolean
+is_bouncy(gchar *str_num)
+{
+    /* turn num into an arbitrarily long number
+     * then split it into an array
+     * a = comp(num[i], num[i+1])
+     * i++;
+     * for(i; i <= num.length; i++)
+     *     if(comp(num[i], num[i+1]) != a and a != 0)
+     *         return true;
+     *     }
+     *     return false;
+     * }
+     */
+    gchar num_a;
+    gdouble first, second;
+    gint compare_result;
+
+    num_a = g_strsplit(str_num, "");
+
+    gint i, compare_result;
+}
+    
+    
