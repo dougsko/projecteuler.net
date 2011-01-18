@@ -7,7 +7,7 @@ require '../tools/ffi_pe'
 
 include PEMethods
 
-max = 50
+max = 500
 count = 0
 
 2.upto max do |i|
