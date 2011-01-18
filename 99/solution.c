@@ -24,7 +24,7 @@ main()
 
     omp_set_num_threads(4);
 
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for(i = 0; i < 1000; i++)
     {
         pair = g_strsplit(number_pairs[i], ",", -1);
@@ -44,7 +44,7 @@ main()
         }
 
     }
-    g_print("%d: %s\n", line_num, number_pairs[line_num]);
+    g_print("%d: %s\n", line_num+1, number_pairs[line_num]);
 
     return 0;
 }
