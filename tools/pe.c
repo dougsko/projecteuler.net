@@ -135,24 +135,30 @@ count_digits(gdouble n)
 gboolean
 is_bouncy(gchar *str_num)
 {
-    /* turn num into an arbitrarily long number
-     * then split it into an array
-     * a = comp(num[i], num[i+1])
-     * i++;
-     * for(i; i <= num.length; i++)
-     *     if(comp(num[i], num[i+1]) != a and a != 0)
-     *         return true;
-     *     }
-     *     return false;
-     * }
-     */
-    gchar num_a;
-    gdouble first, second;
-    gint compare_result;
+    gint i, first, second;
+    guint num_length;
+    gboolean increasing, decreasing = FALSE;
 
-    num_a = g_strsplit(str_num, "");
+    num_length = strlen(str_num);
+    for(i = 0; i < num_length - 1; i++)
+    {
+        first = g_ascii_digit_value(str_num[i]);
+        second = g_ascii_digit_value(str_num[i + 1]);
 
-    gint i, compare_result;
+        if(first > second)
+        {
+            decreasing = TRUE;
+            //g_print("%d > %d\n", first, second);
+        }
+        if(first < second)
+        {
+            increasing = TRUE;
+            //g_print("%d < %d\n", first, second);
+        }
+        if((increasing == TRUE) && (decreasing == TRUE))
+            return TRUE;
+    }
+    return FALSE;
 }
     
     

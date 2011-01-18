@@ -37,4 +37,10 @@ describe "PEMethods" do
             count_digits(n).should == n.to_s.length
         end
     end
+
+    it "tests is_bouncy" do
+        is_bouncy("155349").should == true
+        is_bouncy("12345").should == false
+        is_bouncy("98764").should == false
+    end
 end

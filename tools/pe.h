@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <math.h>
+#include <string.h>
 #include <gmp.h>
 #include <omp.h>
 
@@ -15,4 +16,4 @@ gchar * read_file(gchar *filename);
 gint int_cmp(gconstpointer a, gconstpointer b);
 GArray * array_copy(GArray *old);
 gint count_digits(gdouble n);
-gboolean is_bouncy(gstring n);
+gboolean is_bouncy(gchar *n);

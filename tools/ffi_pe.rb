@@ -14,4 +14,5 @@ module PEMethods
     attach_function :is_prime, [:long], :bool
     attach_function :factorial, [:ulong], :string
     attach_function :count_digits, [:double], :int
+    attach_function :is_bouncy, [:string], :bool
 end
