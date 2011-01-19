@@ -22,7 +22,7 @@ require '../tools/ffi_pe.rb'
 include PEMethods
 
 count = 0
-upper = 10**100
+upper = 10**10
 1.upto(upper - 1) do |i|
     if(! is_bouncy(i.to_s))
         count += 1
