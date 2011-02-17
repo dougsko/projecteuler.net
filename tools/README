@@ -1,0 +1,4 @@
+Make sure to set this env var before running so everything gets linked
+right:
+
+export LD_LIBRARY_PATH=../tools

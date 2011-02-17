@@ -15,4 +15,7 @@ module PEMethods
     attach_function :factorial, [:ulong], :string
     attach_function :count_digits, [:double], :int
     attach_function :is_bouncy, [:string], :bool
+    attach_function :next_prime, [:string], :string
+    attach_function :prob_prime, [:ulong], :bool
+    attach_function :sieve, [:int, :int], :string
 end

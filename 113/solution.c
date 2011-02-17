@@ -16,7 +16,7 @@ main()
     mpz_set_ui(count, 0);
     mpz_set_ui(start, 1);
     mpz_set_ui(base, 10);
-    mpz_pow_ui(upper, base, 9);
+    mpz_pow_ui(upper, base, 6);
 
     while(mpz_cmp(j, upper) < 0)
     {

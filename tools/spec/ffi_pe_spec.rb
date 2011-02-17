@@ -43,4 +43,13 @@ describe "PEMethods" do
         is_bouncy("12345").should == false
         is_bouncy("98764").should == false
     end
+
+    it "tests next_prime" do
+        next_prime("3").should == "5"
+    end
+
+    it "tests prob_prime" do
+        prob_prime("100").should == false
+        prob_prime("5").should == true
+    end
 end
