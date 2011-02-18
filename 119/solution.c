@@ -1,22 +1,5 @@
 #include "../tools/pe.h"
 
-
-gint 
-add_digits(gint num)
-{
-    gchar *p;
-    gint sum = 0;
-
-    p = itoa(num, 10);
-    while(*p != '\0')
-    {
-        gchar c = *p;
-        p++;
-        sum += atoi(&c);
-    }
-    return sum;
-}
-
 gint
 main()
 {
