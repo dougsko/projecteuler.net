@@ -18,4 +18,5 @@ module PEMethods
     attach_function :next_prime, [:string], :string
     attach_function :prob_prime, [:ulong], :bool
     attach_function :sieve, [:int, :int], :string
+    attach_function :itoa, [:int, :int], :string
 end
