@@ -1,16 +1,3 @@
-Try this:
-
-1. Determine how long the key is. This is done by XORing the encrypted
-data with itself shifted various numbers of places, and examining how
-many bytes are the same.
-
-2. If the bytes that are equal are greater than a certain percentage (6%
-accoridng to Bruce Schneier's Applied Cryptography second edition), then
-you have shifted the data by a multiple of the keylength. By finding the
-smallest amount of shifting that results in a large amount of equal
-bytes, you find the keylength.
-
-3. Shift the cipher text by the keylength, and XOR against itself. This
-removes the key and leaves you with the plaintext XORed with the
-plaintext shifted the length of the key. There should be enough
-plaintext to determine the message content.
+1. Split the ciphertext up by every third letter.
+2. Take each new set of text and XOR it with [a..z].
+3. Compare the plaintext freq analysis with known values.

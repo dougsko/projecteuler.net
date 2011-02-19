@@ -37,100 +37,62 @@
 #
 require 'yaml'
 
+# load letter freq
 @letter_freq = YAML.load_file('letter_freq.yaml')
+
+# load cipher text
 @cipher_text = []
 text_a = []
-
 File.open('cipher1.txt', 'r') do |f|
     text_a << f.readlines
 end
 @cipher_text = text_a.join(',').chomp.split(',')
 
-def analyze_freqs(text_a)
-    freqs = {'a' => 0,
-             'b' => 0,
-             'c' => 0,
-             'd' => 0,
-             'e' => 0,
-             'f' => 0,
-             'g' => 0,
-             'h' => 0,
-             'i' => 0,
-             'j' => 0,
-             'k' => 0,
-             'l' => 0,
-             'm' => 0,
-             'n' => 0,
-             'o' => 0,
-             'p' => 0,
-             'q' => 0,
-             'r' => 0,
-             's' => 0,
-             't' => 0,
-             'u' => 0,
-             'v' => 0,
-             'w' => 0,
-             'x' => 0,
-             'y' => 0,
-             'z' => 0
-    }
-             
-    text_a.each do |letter|
-        next if letter < 97 or letter > 122
-        freqs[letter.chr.downcase] += 1
-    end
-    test_freqs = []
-    freqs.sort{ |a, b| b[1] <=> a[1]}.each { |elem|
-        test_freqs << elem[0]
-    }
-    i = 0
-    correct = 0
-    0.upto 25 do |i|
-        if test_freqs[i] == @letter_freq[i]
-            correct += 1
-        end
-    end
-
-    correct / 26.0
-end
-
-
-# lower case letters
-# 97 - 122 base10
-# 32 is a space
-
-# puts 65.to_s(16)
-# puts 65.chr
-# 
-# translate each cipher array and compare letter freqs
-#
-@cipher1 = []
-@cipher2 = []
-@cipher3 = []
+# separate out every third letter
 i = 0
-while(@cipher_text[i+3] != nil) do
-    @cipher1 << @cipher_text[i].to_i
-    @cipher2 << @cipher_text[i+1].to_i
-    @cipher3 << @cipher_text[i+2].to_i
+sub_cipher1 = []
+while(@cipher_text[i] != nil) do
+    sub_cipher1 << @cipher_text[i+2].to_i
     i += 3
 end
 
-ciphers = [@cipher1, @cipher2, @cipher3]
-ans = []
+# XOR with key and print
+def decrypt(cipher_text, key)
+    i = 0
+    string = "" 
+    cipher_text.each do |letter|
+        string << (letter.to_i ^ key[i % key.length]).chr
+        i += 1
+    end
+    string
+end
+
+# find relative frequency for each letter
+# compare with known values
+# calculate error, average and return
+def analyze_freqs(string)
+    test_freqs = {}
+    errors = []
+    ('a'..'z').each do |letter|
+        test_freqs[letter] = string.count(letter) / string.length.to_f
+        errors << (@letter_freq[letter] - test_freqs[letter]).abs
+    end
+    errors.inject(0.0) { |sum, el| sum + el } / errors.size
+end
+
+lowest_error = 10
+lowest = 10
 97.upto(122) do |i|
-    ciphers.each do |cipher|
-        temp_cipher = cipher
-        temp_cipher.collect!{ |letter| letter ^ i }
-        percent_correct =  analyze_freqs(temp_cipher)
-        puts "#{i}: #{percent_correct}"
-        ans << i
+    string = decrypt(sub_cipher1, [i])
+    error = analyze_freqs(string)
+    if error < lowest_error
+        lowest = i
+        lowest_error = error
     end
 end
 
-i = 0
-#while(@cipher_text[i+2] != nil) do
-    #print (@cipher_text[i].to_i ^ ans[0]).chr
-    #print (@cipher_text[i+1].to_i ^ ans[1]).chr
-    #print (@cipher_text[i+2].to_i ^ ans[2]).chr
-    #i += 1
-#end
+# solution: god
+#puts lowest.chr
+#puts decrypt(sub_cipher1, [?d])
+
+puts decrypt(@cipher_text, [?g,?o, ?d]) 
