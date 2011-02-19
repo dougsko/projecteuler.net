@@ -94,5 +94,8 @@ end
 # solution: god
 #puts lowest.chr
 #puts decrypt(sub_cipher1, [?d])
-
-puts decrypt(@cipher_text, [?g,?o, ?d]) 
+sum = 0
+decrypt(@cipher_text, [?g,?o, ?d]).each_byte do |byte|
+    sum += byte
+end
+puts sum
