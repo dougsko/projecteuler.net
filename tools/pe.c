@@ -71,12 +71,12 @@ next_prime(gchar *n)
 }
 
 gboolean
-prob_prime(gulong num)
+prob_prime(gchar *num)
 {
     mpz_t n;
 
-    //mpz_init_set_str(n, num, 10);
-    mpz_init_set_ui(n, num);
+    mpz_init_set_str(n, num, 10);
+    //mpz_init_set_ui(n, num);
 
     if(mpz_probab_prime_p(n, 5))
         return TRUE;

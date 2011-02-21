@@ -27,17 +27,42 @@
 # Find the sum of all S(10, d).
 #
 
-class Pe111
-    def initialize
-    end
+require '../tools/ffi_pe'
 
-    def m(n,d)
+include PEMethods
+def solve(n,d)
+    d = d.to_s
+    min = (10 ** (n-1))
+    max = (10 ** (n)) - 1
+    freq = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
+            8 => 0, 9 => 0}
+    sum = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
+            8 => 0, 9 => 0}
+    count = 0
+    i = min.to_s
+    d = d.to_s
+    while((i = next_prime(i)).size == n)  do
+        freq[i.count(d)] += 1
+        sum[i.count(d)] += i.to_i
     end
+    freq.delete_if{ |k,v| v == 0 }
+    m_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][0]
+    #n_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][1]
 
-    def n(n,d)
-    end
-
-    def s(n,d)
-    end
-
+    #puts "M(#{n},#{d}) = #{m_n_d}"
+    #puts "N(#{n},#{d}) = #{n_n_d}"
+    #puts "S(#{n},#{d}) = #{sum[m_n_d]}"
+    yield sum[m_n_d]
 end
+
+n = 10
+sum = 0
+0.upto(9) do |d|
+    solve(n, d) do |i|
+        sum += i
+    end
+end
+puts
+puts "For d = 0 to 9, the sum of all S(#{n}, d) is #{sum}"
+puts
+
