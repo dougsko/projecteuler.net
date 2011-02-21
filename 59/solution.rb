@@ -48,14 +48,6 @@ File.open('cipher1.txt', 'r') do |f|
 end
 @cipher_text = text_a.join(',').chomp.split(',')
 
-# separate out every third letter
-i = 0
-sub_cipher1 = []
-while(@cipher_text[i] != nil) do
-    sub_cipher1 << @cipher_text[i+2].to_i
-    i += 3
-end
-
 # XOR with key and print
 def decrypt(cipher_text, key)
     i = 0
@@ -80,22 +72,43 @@ def analyze_freqs(string)
     errors.inject(0.0) { |sum, el| sum + el } / errors.size
 end
 
-lowest_error = 10
-lowest = 10
-97.upto(122) do |i|
-    string = decrypt(sub_cipher1, [i])
-    error = analyze_freqs(string)
-    if error < lowest_error
-        lowest = i
-        lowest_error = error
-    end
+# separate out every third letter
+i = 0
+sub_cipher1 = []
+sub_cipher2 = []
+sub_cipher3 = []
+while(@cipher_text[i] != nil) do
+    sub_cipher1 << @cipher_text[i].to_i
+    sub_cipher2 << @cipher_text[i+1].to_i
+    sub_cipher3 << @cipher_text[i+2].to_i
+    i += 3
 end
+
+solution = []
+[sub_cipher1, sub_cipher2, sub_cipher3].each do |sub_cipher|
+    lowest_error = 10
+    lowest = 10
+    97.upto(122) do |i|
+        string = decrypt(sub_cipher, [i])
+        error = analyze_freqs(string)
+        if error < lowest_error
+            lowest = i
+            lowest_error = error
+        end
+    end
+    solution << lowest
+    print lowest.chr + " "
+end
+puts
 
 # solution: god
 #puts lowest.chr
 #puts decrypt(sub_cipher1, [?d])
 sum = 0
-decrypt(@cipher_text, [?g,?o, ?d]).each_byte do |byte|
+d = decrypt(@cipher_text, solution).each_byte do |byte|
     sum += byte
 end
+puts
 puts sum
+puts 
+puts d
