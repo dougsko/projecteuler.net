@@ -17,3 +17,8 @@ gint int_cmp(gconstpointer a, gconstpointer b);
 GArray * array_copy(GArray *old);
 gint count_digits(gdouble n);
 gboolean is_bouncy(gchar *n);
+gchar * next_prime(gchar *n);
+gboolean prob_prime(gchar *n);
+gchar * sieve(gulong start, gulong end);
+gchar * itoa(gint val, gint base);
+gint add_digits(gint n);

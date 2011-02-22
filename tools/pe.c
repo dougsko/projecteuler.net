@@ -58,6 +58,31 @@ factorial(gulong x)
     return mpz_get_str(NULL, 10, fact);
 }
 
+gchar *
+next_prime(gchar *n)
+{
+    mpz_t op, rop;
+    
+    mpz_init(op);
+    mpz_init(rop);
+    mpz_set_str(op, n, 10);
+    mpz_nextprime(rop, op);
+    return mpz_get_str(NULL, 10, rop);
+}
+
+gboolean
+prob_prime(gchar *num)
+{
+    mpz_t n;
+
+    mpz_init_set_str(n, num, 10);
+    //mpz_init_set_ui(n, num);
+
+    if(mpz_probab_prime_p(n, 5))
+        return TRUE;
+    return FALSE;
+}
+
 gint
 print_array(GArray *array)
 {
@@ -160,5 +185,63 @@ is_bouncy(gchar *str_num)
     }
     return FALSE;
 }
-    
-    
+
+gchar *
+sieve(gulong start, gulong end)
+{
+    gulong i, j = start;
+    gulong size = end ;
+    gchar *sieve = calloc(size, 1);
+    gchar *primes;
+    gint count = 0;
+
+    for (i=2; i*i <= size; i++)
+    {
+        if(! sieve[i])
+        {
+            for(j = i+i; j < size; j += i)
+                sieve[j] = 1;
+        }
+    }
+    for (i=start; i<size; i++)
+    {
+        if (!sieve[i])
+        {
+            count++;
+            //printf("%d ", i);
+        }
+    }
+    //printf("\n");
+    printf("count = %d\n", count);
+    free(sieve);
+    return NULL;
+}
+
+gchar *
+itoa(int val, int base)
+{
+    static char buf[32] = {0};
+    int i = 30;
+
+    for(; val && i ; --i, val /= base)
+        buf[i] = "0123456789abcdef"[val % base];
+
+    return &buf[i+1];
+}
+
+gint
+add_digits(gint num)
+{
+    gchar *p;
+    gint sum = 0;
+
+    p = itoa(num, 10);
+    while(*p != '\0')
+    {
+        gchar c = *p;
+        p++;
+        sum += atoi(&c);
+    }
+    return sum;
+}
+
