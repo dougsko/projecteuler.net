@@ -78,7 +78,7 @@ prob_prime(gchar *num)
     mpz_init_set_str(n, num, 10);
     //mpz_init_set_ui(n, num);
 
-    if(mpz_probab_prime_p(n, 5))
+    if(mpz_probab_prime_p(n, 6))
         return TRUE;
     return FALSE;
 }
