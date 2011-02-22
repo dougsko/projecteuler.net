@@ -30,18 +30,27 @@
 require '../tools/ffi_pe'
 
 include PEMethods
-def solve(n,d)
-    d = d.to_s
+def get_primes(n)
+    primes = []
     min = (10 ** (n-1))
-    max = (10 ** (n)) - 1
+    i = min.to_s
+    File.open("ten_digit_primes.txt", 'w') do |f|
+        while((i = next_prime(i)).size == n)  do
+            #primes << i
+            f.puts i
+        end
+    end
+    #primes
+end
+
+def solve(primes,d)
+    d = d.to_s
     freq = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
             8 => 0, 9 => 0}
     sum = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
             8 => 0, 9 => 0}
-    count = 0
-    i = min.to_s
-    d = d.to_s
-    while((i = next_prime(i)).size == n)  do
+
+    primes.each do |i|
         freq[i.count(d)] += 1
         sum[i.count(d)] += i.to_i
     end
@@ -57,12 +66,14 @@ end
 
 n = 10
 sum = 0
-0.upto(9) do |d|
-    solve(n, d) do |i|
-        sum += i
-    end
-end
-puts
-puts "For d = 0 to 9, the sum of all S(#{n}, d) is #{sum}"
-puts
+get_primes(n)
+#primes = get_primes(n)
+#0.upto(9) do |d|
+#    solve(primes, d) do |i|
+#        sum += i
+#    end
+#end
+#puts
+#puts "For d = 0 to 9, the sum of all S(#{n}, d) is #{sum}"
+#puts
 
