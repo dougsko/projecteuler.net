@@ -15,7 +15,7 @@
 int
 main()
 {
-    double max = 50;
+    double max = 50000;
     double out;
     int i, j, k;
     int count = 0;
