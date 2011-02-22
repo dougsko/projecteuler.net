@@ -4,7 +4,7 @@ gint
 main()
 {
     FILE *file;
-    gint n = 7;
+    gint n = 10;
     gint min = pow(10,n-1);
     file = fopen("primes.txt", "w");
     gchar *i;
