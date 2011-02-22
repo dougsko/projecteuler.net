@@ -35,38 +35,80 @@
 # decrypt the message and find the sum of the ASCII values in the
 # original text.
 #
+require 'yaml'
 
+# load letter freq
+@letter_freq = YAML.load_file('letter_freq.yaml')
 
-@text_a = []
-
+# load cipher text
+@cipher_text = []
+text_a = []
 File.open('cipher1.txt', 'r') do |f|
     text_a << f.readlines
 end
+@cipher_text = text_a.join(',').chomp.split(',')
 
-@text_a = text_a.join(',').chomp.split(',')
-text_a_small = @text_a[0..299]
-
-# lower case letters
-# 97 - 122 base10
-# 32 is a space
-
-# puts 65.to_s(16)
-# puts 65.chr
-
-def try_this(a, b, c)
-    key_a = []
-    400.times do
-        key_a << a
-        key_a << b
-        key_a << c
+# XOR with key and print
+def decrypt(cipher_text, key)
+    i = 0
+    string = "" 
+    cipher_text.each do |letter|
+        string << (letter.to_i ^ key[i % key.length]).chr
+        i += 1
     end
-    puts key_a.size
+    string
 end
 
-97.upto(122) do |a|
-    97.upto(122) do |b|
-        97.upto(122) do |c|
-            try_this(a, b, c)
+# find relative frequency for each letter
+# compare with known values
+# calculate error, average and return
+def analyze_freqs(string)
+    test_freqs = {}
+    errors = []
+    ('a'..'z').each do |letter|
+        test_freqs[letter] = string.count(letter) / string.length.to_f
+        errors << (@letter_freq[letter] - test_freqs[letter]).abs
+    end
+    errors.inject(0.0) { |sum, el| sum + el } / errors.size
+end
+
+# separate out every third letter
+i = 0
+sub_cipher1 = []
+sub_cipher2 = []
+sub_cipher3 = []
+while(@cipher_text[i] != nil) do
+    sub_cipher1 << @cipher_text[i].to_i
+    sub_cipher2 << @cipher_text[i+1].to_i
+    sub_cipher3 << @cipher_text[i+2].to_i
+    i += 3
+end
+
+solution = []
+[sub_cipher1, sub_cipher2, sub_cipher3].each do |sub_cipher|
+    lowest_error = 10
+    lowest = 10
+    97.upto(122) do |i|
+        string = decrypt(sub_cipher, [i])
+        error = analyze_freqs(string)
+        if error < lowest_error
+            lowest = i
+            lowest_error = error
         end
     end
+    solution << lowest
+    print lowest.chr + " "
 end
+puts
+
+# solution: god
+#puts lowest.chr
+#puts decrypt(sub_cipher1, [?d])
+sum = 0
+d = decrypt(@cipher_text, solution).each_byte do |byte|
+    sum += byte
+end
+puts
+puts sum
+puts 
+puts d

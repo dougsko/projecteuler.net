@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <glib.h>
 #include <math.h>
+#include <string.h>
 #include <gmp.h>
 #include <omp.h>
 
@@ -15,3 +16,9 @@ gchar * read_file(gchar *filename);
 gint int_cmp(gconstpointer a, gconstpointer b);
 GArray * array_copy(GArray *old);
 gint count_digits(gdouble n);
+gboolean is_bouncy(gchar *n);
+gchar * next_prime(gchar *n);
+gboolean prob_prime(gchar *n);
+gchar * sieve(gulong start, gulong end);
+gchar * itoa(gint val, gint base);
+gint add_digits(gint n);
