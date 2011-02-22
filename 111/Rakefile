@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+#
+# Build helpers.c
+#
+
+require 'rubygems'
+require 'rake'
+require 'rake/clean'
+
+task :default => [:make]
+
+task :make do
+    sh "gcc -g -L../tools -fopenmp -I../tools `pkg-config --cflags --libs glib-2.0` make_primes.c -o make_primes -lpe"
+#    sh "gcc -fopenmp -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
+#    sh "gcc -fopenmp -L../tools `pkg-config --libs glib-2.0` solution.o -o solution -lpe"
+#    sh "export LD_LIBRARY_PATH=../tools"
+end
+
+CLEAN.include("*.o")
+CLOBBER.include("*.so", "solution")
+
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+      spec.pattern = FileList['spec/**/*_spec.rb']
+end
