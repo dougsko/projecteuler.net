@@ -1,4 +1,5 @@
 /* Helper functions for projecteuler.net problems. */
+#include <stdlib.h>
 #include <stdio.h>
 #include <glib.h>
 #include <math.h>

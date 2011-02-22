@@ -10,32 +10,35 @@ main()
     gint num = 0;
     gchar *filename;
     gchar *foo;
+    gint bar;
 
-    mpz_init_set_str(i, "10000000", 10);
-    mpz_init_set_str(max, "99999999", 10);
+    omp_set_num_threads(4);
+
+    mpz_init_set_str(i, "1000000", 10);
+    mpz_init_set_str(max, "9999999", 10);
 
     asprintf(&filename, "data/primes-%03d.gz", num);
     gzfile = gzopen(filename, "w");
+    free(filename);
     
     while(mpz_cmp(i, max) == -1)
     {
-        if(count % 1000000 == 0)
+        if(count % 10000 == 0)
         {
             gzclose(gzfile);
             asprintf(&filename, "data/primes-%03d.gz", num);
             gzfile = gzopen(filename, "w");
-            foo = mpz_get_str(NULL, 10, i);
-            mpz_clear(i);
-            mpz_init_set_str(i, foo, 10);
+            free(filename);
             num++;
             count = 1;
         }
         count++;
         mpz_nextprime(i, i);
-        gzprintf(gzfile, "%s\n", mpz_get_str(NULL, 10, i));
+        foo = mpz_get_str(NULL, 10, i);
+        gzprintf(gzfile, "%s\n", foo);
+        free(foo);
+        bar = mpz_cmp(i, max) - 1;
     }
-    mpz_clear(i);
-    mpz_clear(max);
     gzclose(gzfile);
 
     return 0;
