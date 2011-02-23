@@ -28,52 +28,49 @@
 #
 
 require '../tools/ffi_pe'
+require 'zlib'
 
 include PEMethods
-def get_primes(n)
-    primes = []
-    min = (10 ** (n-1))
-    i = min.to_s
-    File.open("ten_digit_primes.txt", 'w') do |f|
-        while((i = next_prime(i)).size == n)  do
-            #primes << i
-            f.puts i
-        end
-    end
-    #primes
-end
 
-def solve(primes,d)
-    d = d.to_s
-    freq = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
-            8 => 0, 9 => 0}
-    sum = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0,
-            8 => 0, 9 => 0}
-
-    primes.each do |i|
-        freq[i.count(d)] += 1
-        sum[i.count(d)] += i.to_i
-    end
-    freq.delete_if{ |k,v| v == 0 }
-    m_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][0]
-    #n_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][1]
-
-    #puts "M(#{n},#{d}) = #{m_n_d}"
-    #puts "N(#{n},#{d}) = #{n_n_d}"
-    #puts "S(#{n},#{d}) = #{sum[m_n_d]}"
-    yield sum[m_n_d]
-end
 
 n = 10
-sum = 0
-get_primes(n)
-#primes = get_primes(n)
-#0.upto(9) do |d|
-#    solve(primes, d) do |i|
-#        sum += i
-#    end
-#end
-#puts
-#puts "For d = 0 to 9, the sum of all S(#{n}, d) is #{sum}"
-#puts
+big_sum = 0
+d = d.to_s
+total_files = 0
+done = 0
 
+0.upto(9) do |d|
+    freq = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0, 
+        5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0}
+    sum = {0 => 0, 1 =>0, 2 => 0, 3 => 0, 4 => 0,
+        8 => 0, 9 => 0}
+
+    files = Dir.glob("data/ten_digit_primes/primes*")
+    total_files = files.size
+    files.each do |filename|
+        primes = []
+        Zlib::GzipReader.open(filename) do |gz|
+            gz.each_line do |line|
+                primes << line.chomp
+            end
+        end
+        primes.each do |i|
+            #puts freq.inspect
+            freq[i.to_s.count(d.to_s)] += 1
+            sum[i.to_s.count(d.to_s)] += i.to_i if sum[i.to_s.count(d.to_s)] != nil
+        end
+        done += 1
+        puts "#{(done / total_files.to_f * 100) / 10}%"
+    end
+        freq.delete_if{ |k,v| v == 0 }
+        m_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][0]
+        #n_n_d = freq.sort{ |a,b| a[1] <=> b[1]}[0][1]
+        
+        #puts "M(#{n},#{d}) = #{m_n_d}"
+        #puts "N(#{n},#{d}) = #{n_n_d}"
+        #puts "S(#{n},#{d}) = #{sum[m_n_d]}"
+        #yield sum[m_n_d]
+        big_sum += sum[m_n_d]
+end
+puts
+puts "The sum of all S(10,d) where d = 0..9 is #{big_sum}"
