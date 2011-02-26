@@ -192,7 +192,6 @@ sieve(gulong start, gulong end)
     gulong i, j = start;
     gulong size = end ;
     gchar *sieve = calloc(size, 1);
-    gchar *primes;
     gint count = 0;
 
     for (i=2; i*i <= size; i++)
@@ -245,3 +244,21 @@ add_digits(gint num)
     return sum;
 }
 
+gchar *
+add_digits_str(gchar *n)
+{
+    mpz_t sum;
+    gchar *res, c;
+
+    mpz_init(sum);
+
+    while(*n != '\0')
+    {
+        c = *n;
+        n++;
+        mpz_add_ui(sum, sum, atoi(&c));
+    }
+    res = mpz_get_str(NULL, 10, sum);
+    mpz_clear(sum);
+    return res;
+}

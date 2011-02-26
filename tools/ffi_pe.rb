@@ -20,4 +20,5 @@ module PEMethods
     attach_function :sieve, [:int, :int], :string
     attach_function :itoa, [:int, :int], :string
     attach_function :add_digits, [:int], :int
+    attach_function :add_digits_str, [:string], :string
 end

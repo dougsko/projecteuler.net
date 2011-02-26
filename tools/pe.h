@@ -23,3 +23,4 @@ gboolean prob_prime(gchar *n);
 gchar * sieve(gulong start, gulong end);
 gchar * itoa(gint val, gint base);
 gint add_digits(gint n);
+gchar * add_digits_str(gchar *n);
