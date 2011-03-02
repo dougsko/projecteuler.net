@@ -52,4 +52,9 @@ describe "PEMethods" do
         prob_prime("100").should == false
         prob_prime("5").should == true
     end
+
+    it "tests is_palindrome" do
+        is_palindrome("595").should == true
+        is_palindrome("5954").should == false
+    end
 end

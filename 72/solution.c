@@ -30,13 +30,12 @@ main()
 
     omp_set_num_threads(4);
 
-    #pragma omp parallel for private(j)
+    #pragma omp parallel for private(j) reduction(+:count)
     for(i = 2; i <= max; i++)
     {
         for(j = 1; j <= i; j++)
         {
             if( gcd(i, j) == 1 && j < i)
-                #pragma omp atomic
                 count++;
         }
     }
