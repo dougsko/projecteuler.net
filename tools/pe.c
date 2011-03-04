@@ -59,15 +59,23 @@ factorial(gulong x)
 }
 
 gchar *
-next_prime(gchar *n)
+next_prime(gchar *prime)
 {
     mpz_t op, rop;
     
     mpz_init(op);
     mpz_init(rop);
-    mpz_set_str(op, n, 10);
+    
+    mpz_set_str(op, prime, 10);
     mpz_nextprime(rop, op);
-    return mpz_get_str(NULL, 10, rop);
+    
+    prime = mpz_get_str(NULL, 10, rop);
+
+    mpz_clear(op);
+    mpz_clear(rop);
+    //g_free(n);
+
+    return prime;
 }
 
 gboolean
