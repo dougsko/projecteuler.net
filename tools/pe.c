@@ -95,6 +95,39 @@ prob_prime(gchar *num)
     return FALSE;
 }
 
+gchar *
+next_prime(gchar *prime)
+{
+    mpz_t op, rop;
+    
+    mpz_init(op);
+    mpz_init(rop);
+    
+    mpz_set_str(op, prime, 10);
+    mpz_nextprime(rop, op);
+    
+    prime = mpz_get_str(NULL, 10, rop);
+
+    mpz_clear(op);
+    mpz_clear(rop);
+    //g_free(n);
+
+    return prime;
+}
+
+gboolean
+prob_prime(gchar *num)
+{
+    mpz_t n;
+
+    mpz_init_set_str(n, num, 10);
+    //mpz_init_set_ui(n, num);
+
+    if(mpz_probab_prime_p(n, 3))
+        return TRUE;
+    return FALSE;
+}
+
 gint
 print_array(GArray *array)
 {
@@ -219,15 +252,23 @@ sieve(gulong start, gulong end)
         if (!sieve[i])
         {
             count++;
+<<<<<<< HEAD
             printf("%d ", i);
         }
     }
     printf("\n");
+=======
+            //printf("%d ", i);
+        }
+    }
+    //printf("\n");
+>>>>>>> dbd0a1bc6541eabb2b14aa5f8909193f7bc0741d
     printf("count = %d\n", count);
     free(sieve);
     return NULL;
 }
 
+<<<<<<< HEAD
 void
 mpz_sieve(gchar *start, gchar *end)
 {
@@ -269,6 +310,8 @@ mpz_sieve(gchar *start, gchar *end)
 
     
 
+=======
+>>>>>>> dbd0a1bc6541eabb2b14aa5f8909193f7bc0741d
 gchar *
 itoa(int val, int base)
 {
@@ -297,3 +340,24 @@ add_digits(gint num)
     return sum;
 }
 
+<<<<<<< HEAD
+=======
+gchar *
+add_digits_str(gchar *n)
+{
+    mpz_t sum;
+    gchar *res, c;
+
+    mpz_init(sum);
+
+    while(*n != '\0')
+    {
+        c = *n;
+        n++;
+        mpz_add_ui(sum, sum, atoi(&c));
+    }
+    res = mpz_get_str(NULL, 10, sum);
+    mpz_clear(sum);
+    return res;
+}
+>>>>>>> dbd0a1bc6541eabb2b14aa5f8909193f7bc0741d

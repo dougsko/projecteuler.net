@@ -1,4 +1,5 @@
 /* Helper functions for projecteuler.net problems. */
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
@@ -23,3 +24,7 @@ gboolean prob_prime(gchar *n);
 gchar * sieve(gulong start, gulong end);
 gchar * itoa(gint val, gint base);
 gint add_digits(gint n);
+<<<<<<< HEAD
+=======
+gchar * add_digits_str(gchar *n);
+>>>>>>> dbd0a1bc6541eabb2b14aa5f8909193f7bc0741d
