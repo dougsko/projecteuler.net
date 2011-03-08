@@ -23,26 +23,17 @@
 #
 
 class Point
-    attr_reader :north, :south, :east, :west
     def initialize(x, y)
-        @x = x
-        @y = y
-        @north = false
-        @south = false
-        @east = false
-        @west = false
+        @p = [x, y]
+        @p
+    end
 
-        if @x < 0
-            @west = true
-        elsif @x > 0
-            @east = true
-        end
+    def x
+        @p[0]
+    end
 
-        if @y < 0
-            @south = true
-        elsif @y > 0
-            @north = true
-        end
+    def y
+        @p[1]
     end
 end
 
@@ -53,40 +44,23 @@ class Triangle
         @p3 = p3
     end
 
-    def dot(a, b)
-        sum = 0
-        a.zip(b){|a,b| sum += a*b}
-        sum
-    end
-
-    def cross(a, b)
-        a[0]*b[1] - b[0]*a[1]
-    end
-
     def points
         [@p1, @p2, @p3]
     end
 
-    def contains_origin?
-        n = 0
-        s = 0
-        e = 0
-        w = 0
-        self.points.each do |point|
-            n += 1 if point.north
-            s += 1 if point.south
-            e += 1 if point.east
-            w += 1 if point.west
-        end
-        if (n >= 2 and s == 1) or (s >= 2 and n == 1)
-            if (e >= 2 and w == 1) or (w >= 2 and e == 1)
-                return true
-            end
-        end
-        return false
+    # http://mathforum.org/library/drmath/view/54503.html
+    def contains_point?(test_p)
+        m1 = (@p2.y - @p1.y) / (@p2.x - @p1.x)
+        b1 = -1 * ( m1 * @p1.x - @p1.y )
+        y1 = m1 * @p3.x + b1
+        d1 = m1 * test_p.x + b1
+        puts "y = #{m1}x + #{b1}"
+        puts @p3.y - y1
+        puts d1
     end
 end
 
+test_point = Point.new(0, 0)
 
 p1 = Point.new(-340, 495)
 p2 = Point.new(-153, -910)
@@ -99,6 +73,6 @@ p6 = Point.new(574, -645)
 t1 = Triangle.new(p1, p2, p3)
 t2 = Triangle.new(p4, p5, p6)
 
-puts t1.contains_origin?
-puts t2.contains_origin?
+puts t1.contains_point?(test_point)
+puts t2.contains_point?(test_point)
 
