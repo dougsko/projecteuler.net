@@ -49,25 +49,34 @@ factorial(gulong x)
 {
     mpz_t n;
     mpz_t fact;
+    gchar *factorial;
 
     mpz_init_set_ui(n, x);
     mpz_init(fact);
 
     mpz_fac_ui(fact, x);
 
-    return mpz_get_str(NULL, 10, fact);
+    factorial = mpz_get_str(NULL, 10, fact);
+    mpz_clear(n);
+    mpz_clear(fact);
+    return factorial;
 }
 
 gchar *
 next_prime(gchar *n)
 {
     mpz_t op, rop;
+    gchar *prime;
     
     mpz_init(op);
     mpz_init(rop);
     mpz_set_str(op, n, 10);
     mpz_nextprime(rop, op);
-    return mpz_get_str(NULL, 10, rop);
+    
+    prime = mpz_get_str(NULL, 10, rop);
+    mpz_clear(op);
+    mpz_clear(rop);
+    return prime;
 }
 
 gboolean
@@ -76,10 +85,13 @@ prob_prime(gchar *num)
     mpz_t n;
 
     mpz_init_set_str(n, num, 10);
-    //mpz_init_set_ui(n, num);
 
     if(mpz_probab_prime_p(n, 5))
+    {
+        mpz_clear(n);
         return TRUE;
+    }
+    mpz_clear(n);
     return FALSE;
 }
 
@@ -192,7 +204,6 @@ sieve(gulong start, gulong end)
     gulong i, j = start;
     gulong size = end ;
     gchar *sieve = calloc(size, 1);
-    gchar *primes;
     gint count = 0;
 
     for (i=2; i*i <= size; i++)
@@ -208,14 +219,55 @@ sieve(gulong start, gulong end)
         if (!sieve[i])
         {
             count++;
-            //printf("%d ", i);
+            printf("%d ", i);
         }
     }
-    //printf("\n");
+    printf("\n");
     printf("count = %d\n", count);
     free(sieve);
     return NULL;
 }
+
+void
+mpz_sieve(gchar *start, gchar *end)
+{
+    mpz_t foo, i, j, start_mpz, end_mpz, size, count, primes, one;
+
+    mpz_init_set_str(start_mpz, start, 10);
+    mpz_init_set_str(end_mpz, end, 10);
+    mpz_init_set_str(i, start, 10);
+    mpz_init_set_str(j, start, 10);
+    mpz_init_set_str(size, end, 10);
+    mpz_init_set_str(one, "1", 10);
+    mpz_init(count);
+    mpz_init(foo);
+    mpz_array_init(primes, sizeof(end_mpz), sizeof(end_mpz));
+    gchar *sieve = calloc(sizeof(end_mpz), 1);
+
+    mpz_mul(foo, i, i);
+    for(mpz_init_set_str(i, "2", 10); mpz_cmp(foo, size) < 0 ; mpz_add_ui(i, i, 1))
+    {
+        if(! sieve[atoi(mpz_get_str(NULL, 10, i))])
+        {
+            for(mpz_add(j, i, i); mpz_cmp(j, size) < 0; mpz_add(j, j, i))
+                sieve[atoi(mpz_get_str(NULL, 10, j))] = 1;
+        }
+        mpz_mul(foo, i, i);
+    }
+    for(mpz_set(i, start_mpz); mpz_cmp(i, size) < 0; mpz_add_ui(i, i, 1))
+    {
+        if(! sieve[atoi(mpz_get_str(NULL, 10, i))])
+        {
+            mpz_add_ui(count, count, 1);
+            printf("%s ", mpz_get_str(NULL, 10, i));
+        }
+    }
+    free(sieve);
+
+}
+
+
+    
 
 gchar *
 itoa(int val, int base)
