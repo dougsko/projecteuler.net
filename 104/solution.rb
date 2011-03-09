@@ -17,26 +17,16 @@
 # digits AND the last nine digits are 1-9 pandigital, find k.
 
 def pandigital?(num)
-    num_a = num.to_s.split('').collect{|x| x.to_i}.sort
+    num_a = num.split('').collect{|x| x.to_i}.sort
     return true if num_a == [1, 2, 3, 4, 5, 6, 7, 8, 9]
     false
 end
 
-def fib(n)
-  a,b = 0,1
-  n.times do
-    #printf("%d\n", a)
-    a,b = b,a+b
-  end
-  a
-end
-
-# put this crap right up in the fib method
-k = 2700
+k = 1
+a,b = 0,1
 loop do
-    f_k = fib(k)
-    
-    if pandigital?(f_k.to_s[0..8].to_i) and pandigital?(f_k.to_s.reverse[0..8].to_i)
+    a,b = b,a+b
+    if pandigital?(a.to_s[0..8]) and pandigital?(a.to_s.reverse[0..8])
         puts k
         exit
     end
