@@ -99,14 +99,11 @@ next_prime(gchar *prime)
 }
 
 gint
-print_array(GArray *array)
+print_char_array(GArray *array)
 {
-    int i;
-    printf("[");
-    for(i=0; i < array->len - 1; i++){
-        printf("%d, ", g_array_index(array, gint, i));
-    }
-    printf("%d]\n", g_array_index(array, gint, array->len));
+    gint i;
+    for(i = 0; i < array->len; i++)
+        printf("%c ", g_array_index(array, gint, i));
     return 0;
 }
 
@@ -143,7 +140,7 @@ int_cmp(gconstpointer a, gconstpointer b)
     const gint *aa = (const gint *)a;
     const gint *bb = (const gint *)b;
 
-    g_print("%d\t%d\n", *aa, *bb);
+    //g_print("%d\t%d\n", *aa, *bb);
     if(*aa > *bb)
         return 1;
     else if(*bb > *aa)

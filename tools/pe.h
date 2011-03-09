@@ -12,7 +12,7 @@ gint gcd(gint a, gint b);
 gfloat phi(gint n);
 gboolean is_prime(glong value);
 gchar * factorial(gulong n);
-gint print_array(GArray *array);
+gint print_char_array(GArray *array);
 gint sum_array(GArray *array);
 gchar * read_file(gchar *filename);
 gint int_cmp(gconstpointer a, gconstpointer b);
