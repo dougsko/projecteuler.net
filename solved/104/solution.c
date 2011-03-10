@@ -11,7 +11,6 @@ main()
     gint k;
     mpz_t rop;
     GArray *first_nine_array, *last_nine_array;
-    time_t time1, time2;
 
     mpz_init_set_ui(rop, 1);
     
@@ -20,8 +19,6 @@ main()
     last_nine_string = g_string_new(NULL);
     first_nine_array = g_array_new(FALSE, FALSE, sizeof(gint));
     last_nine_array = g_array_new(FALSE, FALSE, sizeof(gint));
-
-    time1 = time(NULL);
 
     k = 2700;
     while(TRUE)
@@ -77,13 +74,6 @@ main()
             break;
         }
     
-        if(k % 10000 == 0)
-        {
-            time2 = time(NULL);
-            printf("Trying k = %d\t%d\n", k, time2 - time1);
-            time2 = time1;
-            time1 = time(NULL);
-        }
         k++; 
 
         g_array_remove_range(first_nine_array, 0, first_nine_array->len);
