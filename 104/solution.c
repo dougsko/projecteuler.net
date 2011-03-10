@@ -1,4 +1,5 @@
 #include "../tools/pe.h"
+#include <time.h>
 
 
 gint
@@ -7,23 +8,27 @@ main()
     gchar *foo, *bar, *oof;
     GString *one_to_nine, *first_nine_string, *last_nine_string;
     gint i;
-    unsigned long int k;
+    gint k;
     mpz_t rop;
     GArray *first_nine_array, *last_nine_array;
+    time_t time1, time2;
 
     mpz_init_set_ui(rop, 1);
-
+    
     one_to_nine = g_string_new("123456789");
     first_nine_string = g_string_new(NULL);
     last_nine_string = g_string_new(NULL);
     first_nine_array = g_array_new(FALSE, FALSE, sizeof(gint));
     last_nine_array = g_array_new(FALSE, FALSE, sizeof(gint));
 
+    time1 = time(NULL);
+
     k = 2700;
     while(TRUE)
     {
         // Get next fib number
         mpz_fib_ui(rop, k); 
+
         foo = mpz_get_str(NULL, 10, rop);
     
         // put first and last nine into arrays and sort them
@@ -68,10 +73,17 @@ main()
                 g_string_equal(one_to_nine, last_nine_string)) 
         //if(g_string_equal(one_to_nine, first_nine_string))
         {
-            printf("%d\n", k);
+            printf("\n\n-----SOLUTION-----\nk = %d\n------------------\n", k);
             break;
         }
     
+        if(k % 10000 == 0)
+        {
+            time2 = time(NULL);
+            printf("Trying k = %d\t%d\n", k, time2 - time1);
+            time2 = time1;
+            time1 = time(NULL);
+        }
         k++; 
 
         g_array_remove_range(first_nine_array, 0, first_nine_array->len);
