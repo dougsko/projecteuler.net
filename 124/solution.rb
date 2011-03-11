@@ -26,7 +26,7 @@ end
 # res -> key is rad(n), value is array of n's
 res = {}
 
-1.upto(10) do |n|
+1.upto(100000) do |n|
     if res[rad(n)] == nil
         res[rad(n)] = []
     end
@@ -37,11 +37,14 @@ res.each do |k,v|
     v.sort!
 end 
 
-puts res.inspect
+#puts res.inspect
+awesome = []
 
 res.sort{|a, b| a[0] <=> b[0]}.each do |elem|
-    puts "#{elem[0]} #{elem[1]}"
+    puts "#{elem[0]} #{elem[1].inspect}"
+    awesome << elem[1]
 end
 
+awesome.flatten!
 
-
+puts awesome[9999]
