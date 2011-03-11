@@ -41,7 +41,7 @@ end
 awesome = []
 
 res.sort{|a, b| a[0] <=> b[0]}.each do |elem|
-    puts "#{elem[0]} #{elem[1].inspect}"
+    #puts "#{elem[0]} #{elem[1].inspect}"
     awesome << elem[1]
 end
 
