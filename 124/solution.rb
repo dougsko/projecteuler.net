@@ -23,19 +23,25 @@ def rad(n)
     p
 end
 
-n_rad_n = {}
+# res -> key is rad(n), value is array of n's
+res = {}
 
 1.upto(10) do |n|
-    n_rad_n[n] = rad(n)
+    if res[rad(n)] == nil
+        res[rad(n)] = []
+    end
+    res[rad(n)] << n
 end
 
-puts n_rad_n.inspect
+res.each do |k,v|
+    v.sort!
+end 
 
-n_a = []
-rad_n = []
+puts res.inspect
 
-# need a way to sort by a[1], then a[0]
-n_rad_n.sort{|a,b| a[1]<=>b[1]}.each { |elem|
-    puts "#{elem[0]}, #{elem[1]}"
-}
+res.sort{|a, b| a[0] <=> b[0]}.each do |elem|
+    puts "#{elem[0]} #{elem[1]}"
+end
+
+
 
