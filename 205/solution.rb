@@ -18,8 +18,24 @@
 
 require '../tools/ffi_pe'
 
+def roll(num_dice, num_sides)
+    sum = 0
+    num_dice.times do |die|
+        sum += rand(num_sides) + 1
+    end
+    sum
+end
 
+total = 0
+win = 0
+2000000.times do
+    peter = roll(9,4)
+    colin = roll(6,6)
+    win += 1 if peter > colin
+    total += 1
+end
 
+printf("Win percentage = %0.7f\n", win / total.to_f)
 
 
 #  printf("%0.7f\n", 10/3.0)
