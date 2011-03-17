@@ -27,13 +27,16 @@ main()
     win = 0;
     total = 0;
 
-    for(i = 0; i <= 9000000000; i++)
+    for(i = 0; i <= 1000000; i++)
     {
-        peter = roll(9, 4);
-        colin = roll(6, 6);
-        if(peter > colin)
-            win++;
-        total++;
+        for(j = 0; j <= 1000000; j++)
+        {
+            peter = roll(9, 4);
+            colin = roll(6, 6);
+            if(peter > colin)
+                win++;
+            total++;
+        }
     }
     printf("Wins: %d\tTotal: %d\n", win, total);
     printf("Win percentage = %0.7f\n", (float)win / total);
