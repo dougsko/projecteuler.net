@@ -19,17 +19,20 @@ roll(num_dice, num_sides)
 gint
 main()
 {
-    gint i, j, peter, colin, win, total;
+    gint i, j, peter, colin;
+    gfloat win, total;
 
-    peter, colin, total = 0;
     srand(time(NULL));
+    peter, colin, total = 0;
 
     win = 0;
     total = 0;
 
-    for(i = 0; i <= 1000000; i++)
+    // 0.57315066
+    // 0.5732091
+    for(i = 0; i <= 10000000; i++)
     {
-        for(j = 0; j <= 1000000; j++)
+        for(j = 0; j <= 1000; j++)
         {
             peter = roll(9, 4);
             colin = roll(6, 6);
@@ -38,8 +41,8 @@ main()
             total++;
         }
     }
-    printf("Wins: %d\tTotal: %d\n", win, total);
-    printf("Win percentage = %0.7f\n", (float)win / total);
+    printf("Wins: %.0f\tTotal: %.0f\n", win, total);
+    printf("Win percentage = %0.7f\n", win / total);
 
     return 0;
 }
