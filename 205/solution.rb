@@ -16,7 +16,6 @@
 # your answer rounded to seven decimal places in the form 0.abcdefg
 #
 
-require '../tools/ffi_pe'
 
 def roll(num_dice, num_sides)
     sum = 0
@@ -28,7 +27,7 @@ end
 
 total = 0
 win = 0
-2000000.times do
+5000000.times do
     peter = roll(9,4)
     colin = roll(6,6)
     win += 1 if peter > colin
