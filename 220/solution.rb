@@ -38,7 +38,11 @@ def make_directions(d)
     end
     return a.delete("a").delete("b").split('')
 end
-
+puts make_directions(1).inspect
+puts make_directions(2).inspect
+puts make_directions(3).inspect
+puts make_directions(4).inspect
+exit
 heading = 0
 point = [0, 0]
 i = 0
