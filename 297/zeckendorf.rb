@@ -23,6 +23,7 @@
 #
 
 class Zeckendorf
+    attr_reader :combo
     def initialize(n)
         @fibs = [1, 2]
         while @fibs.last <= n do
@@ -51,6 +52,7 @@ class Zeckendorf
                     sum += elem
                 end
                 if sum == n
+                    @combo = combo
                     return combo.size
                 end
             end
@@ -59,13 +61,3 @@ class Zeckendorf
 
     end
 end
-
-sum = 0
-z_n = 0
-zeck = Zeckendorf.new(1000000)
-0.upto(100) do |n|
-    z_n = zeck.z(n)
-    sum += z_n
-    puts "z(#{n}) = #{z_n}"
-end
-puts sum
