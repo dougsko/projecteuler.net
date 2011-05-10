@@ -30,9 +30,7 @@ count = 0
         i.to_s.split('').collect{|x| sum += x.to_i*x.to_i}
         i = sum
         #puts i
-        if i == 89
-            count += 1
-        end
+        count += 1 if i == 89
     end
     #puts j
     if j % 100000 == 0
