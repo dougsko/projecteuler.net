@@ -6,7 +6,7 @@ main()
     glong max, sum, count = 0;
     GArray *squares;
     GArray *pals;
-    gint i;
+    gint i, j;
     gdouble square_root, square;
 
     max = pow(10, 3);
@@ -20,8 +20,17 @@ main()
         printf("%0.f\n", square);
         g_array_append_val(squares, square);
     }
+    
+    i = 0;
+    j = i;
 
-    printf("%f ", &g_array_index(squares, gdouble, 0));
+    for(i = 0; i <= squares->len - 2; i++)
+    {
+        // make a subset of the array and sum it up
+    }
+
+
+    // printf("%f ", &g_array_index(squares, gdouble, 0));
 
 
     return 0;
