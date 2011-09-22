@@ -274,3 +274,22 @@ add_digits_str(gchar *n)
     mpz_clear(sum);
     return res;
 }
+
+gboolean
+is_palindrome(glong n)
+{
+    gint s = 0;
+    gint a = n;
+    gint rem;
+
+    while(n > 0)
+    {
+        rem = n % 10;
+        s = s * 10 + rem;
+        n = n / 10;
+    }
+    if(s == a)
+        return TRUE;
+    return FALSE;
+}
+

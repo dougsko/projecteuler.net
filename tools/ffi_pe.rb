@@ -20,4 +20,5 @@ module PEMethods
     attach_function :itoa, [:int, :int], :string
     attach_function :add_digits, [:int], :int
     attach_function :add_digits_str, [:string], :string
+    attach_function :is_palindrome, [:long], :bool
 end

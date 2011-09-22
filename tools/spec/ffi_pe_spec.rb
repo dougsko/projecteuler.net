@@ -53,4 +53,9 @@ describe "PEMethods" do
         prob_prime("5").should == true
     end
 
+    it "tests is_palindrome"do
+        is_palindrome(5995).should == true
+        is_palindrome(12345).should == false
+    end
+
 end
