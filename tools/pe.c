@@ -293,3 +293,23 @@ is_palindrome(glong n)
     return FALSE;
 }
 
+// do this maybe
+gboolean
+is_palindrome_str(gchar *n)
+{
+       mpz_t sum;
+       gchar *res, c;
+
+       mpz_init(sum);
+
+       while(*n != '\0')
+       {
+          c = *n;
+          n++;
+          mpz_add_ui(sum, sum, atoi(&c));
+       }
+                                                   }
+       res = mpz_get_str(NULL, 10, sum);
+       mpz_clear(sum);
+       return res; 
+}
