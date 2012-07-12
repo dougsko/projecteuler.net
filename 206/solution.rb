@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+#
+# projecteuler.net
+# problem 206
+#
+
+n = 2
+loop do
+    squares = (n*n).to_s.split('')
+    if squares.size == 19 and squares[0,2,4,6,8,10,12,14,16,18] == ['1','2','3','4','5','6','7','8','9','0']
+        puts n
+        exit
+    end
+    n += 1
+end
+

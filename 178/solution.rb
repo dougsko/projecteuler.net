@@ -14,27 +14,15 @@
 # How many pandigital step numbers less than 10^40 are there?
 #
 
-class Integer
-    def is_step?
-        a = self.to_s.split('')
-        (a.size - 1).times do |i|
-            if (a[i].to_i - a[i+1].to_i).abs != 1
-                return false
-            end
-        end
-        return true
-    end
+require '../tools/ffi_pe'
 
-    def is_pandigital?
-        a = self.to_s.split('')
-        return true if a.sort.uniq == ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-        return false
-    end
-end
+include PEMethods
 
 count = 0
-1000000000.upto(10**40) do |i|
-    count += 1 if i.is_step? and i.is_pandigital?
+max = 10**40
+1000000000.upto(max) do |i|
+    n = i.to_s
+    count += 1 if is_step(n) and is_pandigital(n)
 end
 puts count
         

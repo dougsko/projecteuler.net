@@ -20,4 +20,12 @@ module PEMethods
     attach_function :add_digits, [:int], :int
     attach_function :add_digits_str, [:string], :string
     attach_function :is_palindrome, [:long], :bool
+    attach_function :is_step, [:string], :bool
+    attach_function :is_pandigital, [:string], :bool
+
+    def is_pandigital?(n)
+        a = n.to_s.split('')
+        return true if a.sort.uniq == ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        return false
+    end
 end

@@ -294,6 +294,7 @@ is_palindrome(glong n)
 }
 
 // do this maybe
+/*
 gboolean
 is_palindrome_str(gchar *n)
 {
@@ -312,4 +313,47 @@ is_palindrome_str(gchar *n)
        res = mpz_get_str(NULL, 10, sum);
        mpz_clear(sum);
        return res; 
+}
+*/
+
+gboolean
+is_step(gchar *n)
+{
+    gchar *s = n;
+    gchar *p = n;
+    gchar c, d;
+
+    while (*s != '\0'){
+        s = p + 1;
+        c = *p;
+        d = *s;
+        //printf("%c - %c = %d\n",c, d, abs(c-d));
+        if(abs(c-d) != 1)
+        {
+            return FALSE;
+        }
+        p++;
+        s++;
+    }
+    return TRUE;
+}
+
+gboolean
+is_pandigital(gchar *n)
+{
+    const char *foo = n;
+    char *test = "0123456789";
+    char *s;
+    char c;
+
+    while(*test != '\0')
+    {
+        c = *test;
+        s = c;
+        if(strstr(foo, &s) == NULL)
+            return FALSE;
+        test++;
+    }
+
+    return TRUE;
 }
