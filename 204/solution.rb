@@ -5,9 +5,11 @@
 #
 
 count = 0
-2.upto(10**8) do |i|
-    if(`factor #{i}`.split(':')[1].split(' ').uniq.reject{|x| x.to_i > 5}.size != 0)
+1.upto(10**8) do |i|
+    factors = `factor #{i}`.split(':')[1].split(' ').uniq
+    if(factors == factors.reject{|x| x.to_i > 5})
         count += 1
     end
+
 end
 puts count
