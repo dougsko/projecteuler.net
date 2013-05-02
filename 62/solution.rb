@@ -5,8 +5,8 @@
 #
 #
 
-#num = 41063625
-num = 10000
+num = 41063600
+
 loop do
     wins = []
     a = num.to_s.split('')
@@ -15,7 +15,7 @@ loop do
             wins << p.join('')
         end
     end
-    if wins.uniq.size == 3
+    if wins.uniq.size == 5
         puts wins.uniq.inspect
         puts num
         exit
