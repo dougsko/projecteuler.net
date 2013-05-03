@@ -4,7 +4,7 @@
 #
 # problem 178
 #
-# Consider the number 45656. 
+# Consider the number 45656.
 # It can be seen that each pair of consecutive digits of 45656 has a
 # difference of one.
 # A number for which every pair of consecutive digits has a difference
@@ -21,11 +21,7 @@ include PEMethods
 count = 0
 max = 10**40
 1000000000.upto(max) do |i|
-    n = i.to_s
-    count += 1 if is_step(n) and is_pandigital(n)
+	n = i.to_s
+	count += 1 if is_step(n) and is_pandigital(n)
 end
 puts count
-        
-
-
-    
