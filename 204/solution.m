@@ -13,7 +13,7 @@ ham = 100;
 count = 0;
 
 if( matlabpool('size') <= 0 )
-    matlabpool open
+    matlabpool local 3
 end
 
 start = tic;
@@ -24,3 +24,4 @@ parfor i = 1 : max
 end
 elapsed = toc(start)
 count
+matlabpool close
