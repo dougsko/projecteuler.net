@@ -8,20 +8,20 @@
 
 % How many generalised Hamming numbers of type 100 are there which don't exceed 10^9?
 
-max = 10^9;
+max = 10^5;
 ham = 100;
 count = 0;
 
-if( matlabpool('size') <= 0 )
-    matlabpool local 3
-end
-
+%start = tic;
+%i = 1:max;
+%factors = arrayfun(@(x)(sum(factor(x)>ham)),i);
+%count = numel(factors)-sum(factors)
+%elapsed = toc(start)
 start = tic;
-parfor i = 1 : max
+for i = 1 : max
     if(sum(factor(i) > ham) == 0)
         count = count + 1;
     end
 end
 elapsed = toc(start)
 count
-matlabpool close
