@@ -1,0 +1,8 @@
+x = 30
+d = divisors(x)
+foo = d + x ./ d;
+if all(isprime(foo)
+    disp(x)
+end
+x = x + 1;
+    
