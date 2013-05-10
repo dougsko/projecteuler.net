@@ -1,0 +1,38 @@
+% 
+%#!/usr/bin/env ruby
+%#
+%# projecteuler.net
+%#
+%# problem 119
+%#
+%# he number 512 is interesting because it is equal to the sum of its
+%# digits raised to some power: 5 + 1 + 2 = 8, and 8^3 = 512. Another
+%# example of a number with this property is 614656 = 28^4.
+%#
+%# We shall define an to be the nth term of this sequence and insist that
+%# a number must contain at least two digits to have a sum.
+%#
+%# You are given that a2 = 512 and a10 = 614656.
+%#
+%# Find a30.
+%#
+min = 11;
+max = min + 20;
+x = 10;
+start = tic();
+while(true)
+	[i, j] = meshgrid(min:max, 1:10);
+	if isequal(x, 10)
+		i_gpu = gpuArray(i(1,:));
+		temp_sums = add_digits(i(1,:));
+		sums = repmat(temp_sums,[size(j,1) 1]);
+		powers = sums .^ j;
+		disp(powers(powers==i))
+		min = min + 20 + 1;
+		max = max + 20;
+	end
+	x
+	size(i, 1)
+	break
+end
+elapsed = toc(start)
