@@ -1,14 +1,13 @@
-x = 1;
-foo = [];
+%matlabpool open local 3
+sum = 0;
 start = tic();
-while(x < 10^5)
+parfor x = 1:10^8
     d = divisors(x);
     if all(isprime(d + x ./ d)) == 1
         %disp(x)
-        foo(end+1) = x;
+        sum = sum + x;
     end
-    x = x + 1;
 end
 elepsed = toc(start)
-sum(foo)
+sum
     
