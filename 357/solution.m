@@ -11,3 +11,4 @@ end
 elepsed = toc(start)
 sum
     
+matlabpool close
