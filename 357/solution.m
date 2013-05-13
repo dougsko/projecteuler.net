@@ -1,14 +1,21 @@
-x = 1;
-foo = [];
+if( matlabpool('size') <= 0 )
+	matlabpool local 3
+end
+
+min = 1;
+max = 10^7;
+total = 0;
 start = tic();
-while(x < 10^5)
-    d = divisors(x);
-    if all(isprime(d + x ./ d)) == 1
-        %disp(x)
-        foo(end+1) = x;
+parfor i = min:max
+    d = divisors(i);
+	%foo = d + i ./ d;
+	%disp(foo)
+    %if all(isprime(foo)) == 1
+	if all(isprime(d + i ./ d)) == 1
+        total = total + i;
     end
-    x = x + 1;
 end
 elepsed = toc(start)
-sum(foo)
-    
+total
+
+matlabpool close
