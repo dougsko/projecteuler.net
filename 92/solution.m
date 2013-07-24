@@ -5,11 +5,14 @@ end
 
 clear
 start = tic();
-spmd
+total = 0;
+%spmd
+parfor x = 10^6+1:10^7
 	%x = labindex:numlabs:31;
-	x = 10^7+1:10^8;
-	x_d = codistributed(x);
-	y = arrayfun(@chain, x_d);
-	size(y(y==89), 2)
+	%x = 10^7+1:10^8;
+	%x_d = codistributed(x);
+	y = arrayfun(@chain, x);
+	total = total + size(y(y==89), 2);
 end
+total
 elapsed = toc(start)
