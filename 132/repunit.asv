@@ -1,0 +1,12 @@
+function [ output ] = repunit( input )
+%REPUNIT returns a string of ones
+
+one = '1';
+output = '';
+
+for i = 1:input
+    output = strcat(output, one);
+end
+
+a = ones(1, input);
+s = strtrim(cellstr(num2str(a'))')
