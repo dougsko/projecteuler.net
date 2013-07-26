@@ -7,7 +7,7 @@ clear
 start = tic();
 total = 0;
 %spmd
-parfor x = 10^6+1:10^7
+parfor x = 1:10^7
 	%x = labindex:numlabs:31;
 	%x = 10^7+1:10^8;
 	%x_d = codistributed(x);
