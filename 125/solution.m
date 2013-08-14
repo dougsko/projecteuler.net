@@ -4,8 +4,8 @@ end
 
 clear
 answer = 0;
-max = 1:10^8;
-max=reshape(max,500000,[]);
+max = 1:10^6;
+max = reshape(max,1000000,[]);
 mySum = 0; %zeros(1, max);
 myCount = 0; %zeros(1, max);
 myStrings = {};
@@ -16,10 +16,10 @@ parfor i = 1:size(max, 1);
     pals = max(i, cellfun(@(x) isequal(x, fliplr(x)), myStrings));
     sos = arrayfun(@sum_of_squares, pals);
     mySum = mySum + sum(pals(sos==1));
-    myCount = myCount + size(sos(sos==1),2);
+    %myCount = myCount + size(sos(sos==1),2);
 end
 mySum
-myCount
+%myCount;
 
 elapsed = toc(start)
 
