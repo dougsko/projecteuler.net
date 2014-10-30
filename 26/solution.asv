@@ -1,0 +1,4 @@
+max = 0;
+for d=1:1000
+   repeat = repeatingdec(1/d);
+end
