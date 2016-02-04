@@ -15,7 +15,7 @@ loop do
             wins << p.join('')
         end
     end
-    if wins.uniq.size == 5
+    if wins.uniq.size == 3
         puts wins.uniq.inspect
         puts num
         exit

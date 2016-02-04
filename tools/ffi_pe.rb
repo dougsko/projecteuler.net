@@ -6,7 +6,7 @@ require 'ffi'
 
 module PEMethods
     extend FFI::Library
-    ffi_lib 'libpe.so'
+    ffi_lib '/home/dprostko/bin/projecteuler.net/tools/libpe.so'
 
     attach_function :gcd, [:int, :int], :int
     attach_function :phi, [:int], :float
@@ -22,6 +22,8 @@ module PEMethods
     attach_function :is_palindrome, [:long], :bool
     attach_function :is_step, [:string], :bool
     attach_function :is_pandigital, [:string], :bool
+    attach_function :is_one_nine_pandigital, [:string], :bool
+    attach_function :fib, [:ulong], :string
 
     def is_pandigital?(n)
         a = n.to_s.split('')

@@ -27,3 +27,5 @@ gchar * add_digits_str(gchar *n);
 gboolean is_palindrome(glong n);
 gboolean is_step(gchar *n);
 gboolean is_pandigital(gchar *n);
+gboolean is_one_nine_pandigital(gchar *n);
+gchar * fib(gulong n);
