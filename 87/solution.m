@@ -1,8 +1,13 @@
+% gives the answer of 1139575, which is wrong.
+%
+
 if( matlabpool('size') <= 0 )
-    matlabpool local 2
+    matlabpool local 8
 end
 
-p = primes(90000);
+
+
+p = primes(50000000);
 squares = p .^ 2;
 cubes = p .^ 3;
 fourths = p .^ 4;

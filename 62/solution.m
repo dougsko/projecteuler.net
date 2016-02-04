@@ -1,5 +1,5 @@
 min = 1;
-max = 10^4;
+max = 10^6;
 %min = 20;
 %max = 100;
 count = 0;

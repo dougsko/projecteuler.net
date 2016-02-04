@@ -1,4 +1,4 @@
-require '/home/doug/projecteuler.net/tools/ffi_pe'
+require '/home/dprostko/bin/projecteuler.net/tools/ffi_pe'
 
 include PEMethods
 

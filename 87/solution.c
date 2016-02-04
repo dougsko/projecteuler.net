@@ -15,26 +15,28 @@
 int
 main()
 {
-    gdouble MAX = 100000;
+    // number of primes under 50000000:
+    gint primes[3001134];
+    gdouble MAX = 100;
     gulong out;
     gint i, j, k;
     gint count = 0;
 
     omp_set_num_threads(4);
-    
+
     #pragma omp parallel for private(j, k)
-    for(i = 2; i <= 1000; i++)
+    for(i = 2; i <= 1000000; i++)
     {
-        for(j = 2; j <= 1000; j++)
+        for(j = 2; j <= 1000000; j++)
         {
-            for(k = 2; k <= 1000; k++)
+            for(k = 2; k <= 1000000; k++)
             {
                 if(is_prime(i) && is_prime(j) && is_prime(k))
                 {
                     out = i*i + j*j*j + k*k*k*k;
-                    if(out < 1000)
+                    if(out < 1000000)
                     {
-                        //printf("%lu = %d^2 + %d^3 + %d^4\n", out, i, j, k);
+                        printf("%lu = %d^2 + %d^3 + %d^4\n", out, i, j, k);
                         count++;
                     }
                 }

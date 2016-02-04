@@ -357,3 +357,39 @@ is_pandigital(gchar *n)
 
     return TRUE;
 }
+
+gboolean
+is_one_nine_pandigital(gchar *n)
+{
+    const char *foo = n;
+    char *test = "123456789";
+    char *s;
+    char c;
+
+    while(*test != '\0')
+    {
+        c = *test;
+        s = c;
+        if(strstr(foo, &s) == NULL)
+            return FALSE;
+        test++;
+    }
+
+    return TRUE;
+}
+
+gchar *
+fib(gulong n)
+{
+    gchar *res;
+    mpz_t fn;
+
+    mpz_init(fn);
+
+    mpz_fib_ui(fn, n);
+    res = mpz_get_str(NULL, 10, fn);
+    mpz_clear(fn);
+    return res;
+}
+
+
