@@ -15,19 +15,23 @@
 # least two positive integers?
 #
 
+require 'ruby-progressbar'
+
 sum = 0
-solutions = []
 possible = []
+
 0.upto(99) do |i|
     possible << i
 end
-possible.repeated_permutation(100).to_a.each do |foo|
+
+puts "Calculating combinations..."
+perms = possible.repeated_combination(100).to_a
+
+pbar = ProgressBar.create(:format => '%a %e |%b>%i| %p%% %t', :total => perms.size)
+while foo = perms.pop
     if (foo.inject { |sum, x| sum + x }) == 100
-        if ! solutions.include?(foo.sort)
-            solutions << foo.sort
-            puts foo.inspect
-            sum += 1
-        end
+        sum += 1
     end
+    pbar.increment
 end
 puts sum

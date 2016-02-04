@@ -10,7 +10,7 @@ require 'rake/clean'
 task :default => [:make]
 
 task :make do
-    sh "gcc -g -L../tools -fopenmp -I../tools `pkg-config --cflags --libs glib-2.0` solution.c -o solution -lpe"
+    sh "gcc -g -L../tools -fopenmp -I../tools `pkg-config --cflags glib-2.0` solution.c -o solution -lgmp `pkg-config --libs glib-2.0` -lpe"
 #    sh "gcc -fopenmp -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
 #    sh "gcc -fopenmp -L../tools `pkg-config --libs glib-2.0` solution.o -o solution -lpe"
 #    sh "export LD_LIBRARY_PATH=../tools"
