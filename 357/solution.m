@@ -1,7 +1,10 @@
 %matlabpool open local 3
+%parpool('local', 4);
+%myCluster = parcluster('local')
+%delete(myCluster.Jobs)
 sum = 0;
 start = tic();
-parfor x = 1:10^6
+parfor x = 1:10^3
     d = divisor(x);
     if all(isprime(d + x ./ d)) == 1
         sum = sum + x;

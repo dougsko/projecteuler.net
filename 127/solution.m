@@ -1,5 +1,9 @@
 if( matlabpool('size') <= 0 )
+<<<<<<< HEAD
     matlabpool local 8
+=======
+    matlabpool local 4
+>>>>>>> 53f85f9b1d98fd0b5664907915a242392fbc859d
 end
 
 total_sum = 0;

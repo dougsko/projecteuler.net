@@ -1,12 +1,14 @@
-max = 0;
-big_d = 0;
+biggest_period = 0;
+biggest_d = d;
+
 for d=1:1000
-   repeat = repeatingdec(1/d);
-   length = numel(num2str(repeat));
-   if(length > max)
-       max = length;
-       big_d = d;
-   end
+    period = repeatingdec(d);
+    if(period > biggest_period)
+        biggest_period = period;
+        biggest_d = d;
+    end
 end
-big_d
-max
+biggest_d
+biggest_period
+    
+    

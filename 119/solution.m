@@ -17,12 +17,13 @@
 %# Find a30.
 %#
 min = sym(11);
-max = sym(min + 10^4);
+max = sym(min + 10^5);
 start = tic();
 while(true)
 	[i, j] = meshgrid(min:max, 1:50);
 	if size(i, 1) > 0
-		i_gpu = gpuArray(i(1,:));
+		%i_gpu = gpuArray(i(1,:));
+        i_gpu = i;
 		temp_sums = add_digits(i_gpu(1,:));
 		sums = repmat(temp_sums,[size(j,1) 1]);
 		powers = sums .^ j;
