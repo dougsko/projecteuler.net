@@ -1,5 +1,5 @@
-if( matlabpool('size') <= 0 )
-    matlabpool local 3
+if( isempty(gcp('nocreate')) )
+    matlabpool local 4
 end
 
 %min = 3356000000;
@@ -17,6 +17,6 @@ parfor i = min : max
     end
 end
 elapsed = toc(start)
-matlabpool close
-
+%matlabpool close
+delete(gcp('nocreate'))
 

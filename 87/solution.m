@@ -1,5 +1,5 @@
 if( matlabpool('size') <= 0 )
-    matlabpool local 2
+    matlabpool local 4
 end
 
 p = primes(90000);

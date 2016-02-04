@@ -1,5 +1,5 @@
 if( matlabpool('size') <= 0 )
-    matlabpool local 3
+    matlabpool local 4
 end
 
 total_sum = 0;
