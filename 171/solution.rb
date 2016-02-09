@@ -20,14 +20,26 @@ def f(n)
     n.to_s.chars.map{ |x| x.to_i**2 }.reduce(:+)
 end
 
+def fast_f(n)
+    t = n
+    sum = 0
+    while t != 0
+        rem = t % 10
+        sum += rem ** 2
+        t /= 10
+    end
+    return sum
+end
+
 sum = 0
 
 pbar = ProgressBar.create(:format => '%a %e |%b>%i| %p%% %t', :total => 10**20)
 0.upto(10**20) do |n|
-    x = f(n)
-    if Math.sqrt(x) % 1 == 0
+    y = fast_f(n)
+    if Math.sqrt(y) % 1 == 0
         sum += n
     end
     pbar.increment
 end
+puts
 puts sum

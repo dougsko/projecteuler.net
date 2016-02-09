@@ -243,17 +243,26 @@ itoa(int val, int base)
 gint
 add_digits(gint num)
 {
-    gchar *p;
+    //gchar *p;
     gint sum = 0;
 
-    p = itoa(num, 10);
-    while(*p != '\0')
+    while (num != 0) 
     {
-        gchar c = *p;
-        p++;
-        sum += atoi(&c);
+        sum += num % 10;
+        num /= 10;
     }
     return sum;
+
+    /*
+       p = itoa(num, 10);
+       while(*p != '\0')
+       {
+           gchar c = *p;
+           p++;
+           sum += atoi(&c);
+       }
+       return sum;
+    */
 }
 
 gchar *
@@ -273,6 +282,32 @@ add_digits_str(gchar *n)
     res = mpz_get_str(NULL, 10, sum);
     mpz_clear(sum);
     return res;
+}
+
+// this doesnt really work right
+gchar *
+sum_of_squares_str(gchar *n)
+{
+    mpz_t sum;
+    gchar *res, c;
+    gchar foo[1000];
+    gdouble x;
+    gdouble d_sum;
+
+    mpz_init(sum);
+
+    while(*n != '\0')
+    {
+        c = *n;
+        n++;
+        x = atoi(&c);
+        d_sum += pow(x, 2);
+        mpz_add_ui(sum, sum, pow(atoi(&c), 2));
+    }
+    //res = mpz_get_str(NULL, 10, sum);
+    sprintf(foo, "%d", d_sum);
+    mpz_clear(sum);
+    return foo;
 }
 
 gboolean
@@ -295,26 +330,26 @@ is_palindrome(glong n)
 
 // do this maybe
 /*
-gboolean
-is_palindrome_str(gchar *n)
-{
-       mpz_t sum;
-       gchar *res, c;
+   gboolean
+   is_palindrome_str(gchar *n)
+   {
+   mpz_t sum;
+   gchar *res, c;
 
-       mpz_init(sum);
+   mpz_init(sum);
 
-       while(*n != '\0')
-       {
-          c = *n;
-          n++;
-          mpz_add_ui(sum, sum, atoi(&c));
-       }
-                                                   }
-       res = mpz_get_str(NULL, 10, sum);
-       mpz_clear(sum);
-       return res; 
-}
-*/
+   while(*n != '\0')
+   {
+   c = *n;
+   n++;
+   mpz_add_ui(sum, sum, atoi(&c));
+   }
+   }
+   res = mpz_get_str(NULL, 10, sum);
+   mpz_clear(sum);
+   return res; 
+   }
+   */
 
 gboolean
 is_step(gchar *n)
@@ -391,5 +426,3 @@ fib(gulong n)
     mpz_clear(fn);
     return res;
 }
-
-

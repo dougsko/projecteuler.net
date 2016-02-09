@@ -29,3 +29,4 @@ gboolean is_step(gchar *n);
 gboolean is_pandigital(gchar *n);
 gboolean is_one_nine_pandigital(gchar *n);
 gchar * fib(gulong n);
+gchar * sum_of_squares_str(gchar *);
