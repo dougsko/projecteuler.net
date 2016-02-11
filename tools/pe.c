@@ -426,3 +426,10 @@ fib(gulong n)
     mpz_clear(fn);
     return res;
 }
+
+gdouble
+sqube(gdouble a, gdouble b)
+{
+    return pow(a, 2) * pow(b, 3);
+}
+

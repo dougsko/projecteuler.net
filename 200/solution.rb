@@ -3,38 +3,59 @@
 # projecteuler.net
 # problem 200
 #
+# Getting an answer but it's apparently wrong...
+#
 
-require '../tools/ffi_pe.rb'
+require 'prime'
+require 'ruby-progressbar'
+require '../tools/ffi_pe'
 
 include PEMethods
 
-def make_list
-    p = '1'
-    File.open('primes.txt', 'w') do |f|
-        while(p.to_i < 1000000) do
-            p = next_prime(p)
-            f.puts p
+def is_prime_proof?(n)
+    chars = n.to_s.chars
+    chars.size.times do |i|
+        0.upto(9) do |new_number|
+            chars[i] = new_number
+            if prob_prime(chars.join)
+                return false
+            end
         end
+        chars = n.to_s.chars
     end
+    return true
 end
 
-#make_list
-
-primes = []
-File.open('primes.txt') do |f|
-    f.readlines.each do |line|
-        primes << line.chomp
-    end
-end
-
+primes = Prime.first(5000)
 squbes = []
-# 50000 = 29028200067
-primes[0..80000].permutation(2) do |permute|
-    if permute[0] != permute[1]
-        sqube = permute[0].to_i**2 * permute[1].to_i**3
-    end
-    squbes << sqube if sqube.to_s.match('200')
+possible_prime_proof = []
+prime_proofs = []
+
+perms = primes.permutation(2)
+pbar = ProgressBar.create(:title => "Squbes calulated", :total => perms.size, :format => '%a %e |%b>%i| %p%% %t')
+perms.each do |combo|
+    squbes << combo[0]**2 * combo[1]**3
+    pbar.increment
 end
-squbes.sort!
-puts squbes[199]
+
+pbar = ProgressBar.create(:title => "Squbes matched", :total => squbes.size, :format => '%a %e |%b>%i| %p%% %t')
+squbes.sort.each do |sqube|
+    if sqube.to_s.match(/200/)
+        possible_prime_proof << sqube
+    end
+    pbar.increment
+end
+
+pbar = ProgressBar.create(:title => "Squbes prime proofed", :total => possible_prime_proof.size, :format => '%a %e |%b>%i| %p%% %t')
+possible_prime_proof.each do |candidate|
+    if is_prime_proof?(candidate)
+        prime_proofs << candidate 
+    end
+    pbar.increment
+    exit if prime_proofs.size > 201
+end
+
+prime_proofs.each do |prime_proof|
+    puts "#{prime_proofs.index(prime_proof) + 1}: #{prime_proof}"
+end
 

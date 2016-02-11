@@ -4,6 +4,7 @@
 #
 # problem 81
 #
+# The solution for small_matrix.txt is 2427.
 #
 
 lines = []

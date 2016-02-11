@@ -25,6 +25,7 @@ module PEMethods
     attach_function :is_one_nine_pandigital, [:string], :bool
     attach_function :fib, [:ulong], :string
     attach_function :sum_of_squares_str, [:string], :string
+    attach_function :sqube, [:double, :double], :double
 
     def is_pandigital?(n)
         a = n.to_s.split('')
