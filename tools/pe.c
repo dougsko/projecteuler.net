@@ -177,6 +177,7 @@ is_bouncy(gchar *str_num)
     gboolean increasing, decreasing = FALSE;
 
     num_length = strlen(str_num);
+
     for(i = 0; i < num_length - 1; i++)
     {
         first = g_ascii_digit_value(str_num[i]);

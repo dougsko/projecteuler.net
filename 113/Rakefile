@@ -11,8 +11,10 @@ task :default => [:make]
 
 task :make do
     sh "gcc -g -L../tools -fopenmp -I../tools `pkg-config --cflags glib-2.0` solution.c -o solution -lpe `pkg-config --libs glib-2.0` -lgmp"
-#    sh "gcc -fopenmp -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
-#    sh "gcc -fopenmp -L../tools `pkg-config --libs glib-2.0` solution.o -o solution -lpe"
+    sh "gcc -g -L../tools -fopenmp -I../tools `pkg-config --cflags glib-2.0` solution2.c -o solution2 -lpe `pkg-config --libs glib-2.0` -lgmp"
+
+    #    sh "gcc -fopenmp -I../tools `pkg-config --cflags glib-2.0` -c solution.c -o solution.o"
+    #    sh "gcc -fopenmp -L../tools `pkg-config --libs glib-2.0` solution.o -o solution -lpe"
     sh "export LD_LIBRARY_PATH=../tools"
 end
 
@@ -22,5 +24,5 @@ CLOBBER.include("*.so", "solution")
 require 'rspec/core'
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec) do |spec|
-      spec.pattern = FileList['spec/**/*_spec.rb']
+    spec.pattern = FileList['spec/**/*_spec.rb']
 end
