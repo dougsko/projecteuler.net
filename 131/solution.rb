@@ -24,12 +24,12 @@ total = 0
 primes = Prime.each(1000000).to_a
 pbar = ProgressBar.create(:title => "Primes checked", :total => primes.size, :format => '%a %e |%b>%i| %p%% %t')
 primes.each do |prime|
-    1.upto(200000) do |n|
+    1.upto(1000000) do |n|
         x = (n**3 + n**2 * prime)
         if GMP::Z(x).rootrem(3)[1] == 0
             #puts "#{n}^3 + #{n}^2 * #{prime} = #{x} ::: #{GMP::Z(x).rootrem(3)[0]}^3"
             total += 1
-            break
+            next
         end
     end
     pbar.increment
