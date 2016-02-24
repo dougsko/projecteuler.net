@@ -48,6 +48,7 @@ possible_solutions = []
 [0,1].repeated_permutation(158) do |x| 
     if x.count(0) == 79
         possible_solutions << x
+        puts "possible solution: #{x.inspect}"
     end
 end
 

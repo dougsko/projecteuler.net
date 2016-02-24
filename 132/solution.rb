@@ -15,23 +15,19 @@
 # NOTE: repunits can be expressed like this: (10^n - 1)/9
 
 require 'gmp'
+require 'prime'
 
 # k is a GMP::Z
 def repunit(k)
     (GMP::Z.pow(10, k) - 1) / 9
 end
 
-a = ""
-(10**9).times do 
-    a += "1"
-end
-b = GMP::Z.new(a)
-puts b.to_s
-exit
-
 a = GMP::Z.pow(10, 9)
 r = repunit(a)
-
-z = GMP::Z.new(r.to_s)
-puts z.sizeinbase(10)
+factors = Prime.prime_division(r)
+sum = 0
+factors[0..39].each do |f|
+    sum += f.first
+end
+puts sum
 

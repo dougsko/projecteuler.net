@@ -20,18 +20,14 @@ require 'ruby-progressbar'
 sum = 0
 possible = []
 
-0.upto(99) do |i|
-    possible << i
-end
+possible = (0..99).to_a
 
 puts "Calculating combinations..."
 perms = possible.repeated_combination(100).to_a
 
 pbar = ProgressBar.create(:format => '%a %e |%b>%i| %p%% %t', :total => perms.size)
-while foo = perms.pop
-    if (foo.inject { |sum, x| sum + x }) == 100
-        sum += 1
-    end
+perms.each do |perm|
+    sum += 1 if perm.inject(:+) == 100
     pbar.increment
 end
 puts sum
