@@ -5,21 +5,14 @@
 #
 #
 
-num = 41063600
+require 'gmp'
+require 'parallel'
 
-loop do
-    wins = []
-    a = num.to_s.split('')
-    a.permutation.each do |p|
-        if(Math.cbrt(p.join('').to_i).to_s.split('.')[1] == '0')
-            wins << p.join('')
-        end
-    end
-    if wins.uniq.size == 3
-        puts wins.uniq.inspect
-        puts num
-        exit
-    else
-        num += 1
-    end
+i = 1
+count = 0
+while true
+    count = (i**3).to_s.chars.permutation.map(&:join).map{|x| GMP::Z.new(x.to_i)}.uniq.select{|x| x.to_s.size == (i**3).to_s.size}.select{|x| x.rootrem(3)[1] == 0}.count
+    puts i**3 if count == 5
+    i += 1
 end
+

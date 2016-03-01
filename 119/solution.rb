@@ -16,11 +16,9 @@
 # Find a30.
 #
 
-def add_digits(num)
-	sum = 0
-	num.to_s.split('').collect{ |digit| sum += digit.to_i}
-	sum
-end
+require '../tools/ffi_pe'
+
+include PEMethods
 
 special = []
 i = 11

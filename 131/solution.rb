@@ -21,7 +21,7 @@ require 'gmp'
 
 total = 0
 #primes = Prime.each(100).to_a
-primes = Prime.each(1000000).to_a
+primes = Prime.each(100).to_a
 pbar = ProgressBar.create(:title => "Primes checked", :total => primes.size, :format => '%a %e |%b>%i| %p%% %t')
 primes.each do |prime|
     1.upto(1000000) do |n|
@@ -34,4 +34,5 @@ primes.each do |prime|
     end
     pbar.increment
 end  
+puts
 puts total

@@ -3,6 +3,7 @@
 # FFI version of my C wrapper
 #
 require 'ffi'
+require 'prime'
 
 module PEMethods
     extend FFI::Library
@@ -32,4 +33,19 @@ module PEMethods
         return true if a.sort.uniq == ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
         return false
     end
+
+    def divisors(n)
+        primes, powers = n.prime_division.transpose
+        exponents = powers.map{|i| (0..i).to_a}
+        divisors = exponents.shift.product(*exponents).map do |powers|
+            primes.zip(powers).map{|prime, power| prime ** power}.inject(:*)
+        end
+        d1, d2 = divisors.sort.map{|div| [div, n / div]}.transpose
+        d1
+    end
+
+    def add_digits(n)
+        n.to_s.chars.map(&:to_i).reduce(:+)
+    end
+
 end
