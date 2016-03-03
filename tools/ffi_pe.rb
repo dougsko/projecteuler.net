@@ -44,6 +44,16 @@ module PEMethods
         d1
     end
 
+    def divisors2(n)
+        primes = Prime.prime_division(n).transpose[0]
+        divisors = []
+        primes.each{|x| divisors << x}
+        divisors << primes.reduce(:*)
+        divisors << divisors.map{|x| n / x}
+        divisors << [1, n]
+        divisors.flatten.uniq.sort!
+    end
+
     def add_digits(n)
         n.to_s.chars.map(&:to_i).reduce(:+)
     end

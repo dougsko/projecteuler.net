@@ -1,0 +1,52 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coderay (1.1.1)
+    darwinning (0.1.0)
+    ffi (1.9.10)
+    ffi (1.9.10-java)
+    gmp (0.7.19)
+    gmp_ecm (0.3.1)
+      gmp
+    method_source (0.8.2)
+    msgpack (0.7.4)
+    msgpack (0.7.4-java)
+    parallel (1.6.1)
+    pmap (1.1.1)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry (0.10.3-java)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+      spoon (~> 0.0)
+    rspec-core (3.4.2)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    ruby-mpfr (0.0.17)
+    ruby-progressbar (1.7.5)
+    slop (3.6.0)
+    spoon (0.0.4)
+      ffi
+
+PLATFORMS
+  java
+  ruby
+
+DEPENDENCIES
+  darwinning
+  ffi
+  gmp
+  gmp_ecm
+  msgpack
+  parallel
+  pmap
+  pry
+  rspec-core
+  ruby-mpfr
+  ruby-progressbar
+
+BUNDLED WITH
+   1.11.2
