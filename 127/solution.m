@@ -1,17 +1,12 @@
-if( matlabpool('size') <= 0 )
-<<<<<<< HEAD
-    matlabpool local 8
-=======
-    matlabpool local 4
->>>>>>> 53f85f9b1d98fd0b5664907915a242392fbc859d
-end
+%parpool('local', 6);
 
 total_sum = 0;
 total_count = 0;
 
-parfor a = 1:120000
-    for b = 1:120000
-        for c = 1:120000
+max = 1000;
+parfor a = 1:max
+    for b = 1:max
+        for c = 1:max
             if abchit(a, b, c)
                 total_sum = total_sum + c;
                 total_count = total_count + 1;
