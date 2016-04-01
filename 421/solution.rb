@@ -27,6 +27,6 @@ n = (1..10**11)
 
 foo = []
 n.each_slice(1000000) do |slice|
-    foo << Parallel.map(slice, :in_processes => 6, :progress => "working"){|x| s(x, 10**8)}.reduce(:+)
+    foo << Parallel.map(slice, :in_processes => 7, :progress => "working"){|x| s(x, 10**8)}.reduce(:+)
 end
 puts foo.reduce(:+)
