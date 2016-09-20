@@ -11,10 +11,12 @@ require 'ruby-progressbar'
 require 'pp'
 
 class Problem81
+    attr_accessor :steps, :lines
+
     def initialize
         @lines = []
 
-        File.open('matrix.txt') do |f|
+        File.open('small_matrix.txt') do |f|
             f.readlines.each do |line|
                 @lines << line.split(',')
             end
@@ -22,6 +24,7 @@ class Problem81
         @lines.each do |line|
             line.collect!{|x| x.to_i}
         end
+        @steps = (@lines.first.size - 1) * 2
     end
 
     def check(possible)
@@ -44,16 +47,16 @@ class Problem81
     end
 end
 
+problem = Problem81.new
 possible_solutions = []
-[0,1].repeated_permutation(158) do |x| 
-    if x.count(0) == 79
+[0,1].repeated_permutation(problem.steps) do |x| 
+    if x.count(0) == problem.lines.size - 1
         possible_solutions << x
         puts "possible solution: #{x.inspect}"
     end
 end
 
 ans = []
-problem = Problem81.new
 pbar = ProgressBar.create(:title => "Solutions tried", :total => possible_solutions.size, :format => '%a %e |%b>%i| %p%% %t')
 possible_solutions.each do |possible|
     ans << problem.check(possible)

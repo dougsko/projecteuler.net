@@ -9,7 +9,7 @@
 
 lines = []
 
-File.open('matrix.txt') do |f|
+File.open('small_matrix.txt') do |f|
     f.readlines.each do |line|
         lines << line.split(',')
     end
